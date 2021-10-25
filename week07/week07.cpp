@@ -152,8 +152,6 @@ void interact()
 *********************************************************************/
 int main()
 {
-    //Russells_commit
-    //Calebs_commit
     interact();
 
     return 0;

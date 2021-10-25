@@ -1,3 +1,11 @@
 .DS_Store
 .vs
 workspace.code-workspace
+.DS_Store
+.vs
+.vscode
+*.pdb
+*.exe
+*.ilk
+*.obj
+*.pdb

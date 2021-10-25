@@ -8,9 +8,7 @@
 *   Caleb Georgeson 
 *   Russell Roberts 
 *   Stephen Ellis 
-*   Orion Christensen
-*
-*   Program:    
+*   Orion Christensen    
 *
 *********************************************************************/
 

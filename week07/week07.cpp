@@ -17,6 +17,12 @@
 #include <string>
 using namespace std;
 
+void one(long number);
+void two(long number);
+void pass() { cout << "You pass :)\n"; }
+void fail() { cout << "You've failed :(\n"; }
+const char* passMessage = ":)";
+const char* failMessage = ":(";
 
 /**********************************************
  * MAIN : The top of the callstack.

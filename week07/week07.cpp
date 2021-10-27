@@ -1,144 +1,19 @@
 
 /*********************************************************************
-*   CSE 453 W07 Lab: Memory Organization
-*   https://byui-cse.github.io/cse453-course/Ponder/453.07.Lab.html
-* 
+*   CSE 453
+*
 *   Carlos N Reina
 *   Adrian Whetten
-*   Jordan Burdett 
-*   Caleb Georgeson 
-*   Russell Roberts 
-*   Stephen Ellis 
-*   Orion Christensen    
+*   Jordan Burdett
+*   Caleb Georgeson
+*   Russell Roberts
+*   Stephen Ellis
+*   Orion Christensen
 *
 *********************************************************************/
 
 #include <iostream>
 #include <string>
-#include <iomanip>
-#include <cassert>
-
-using namespace std;
-
-void one(long number);
-void two(long number);
-void pass() { cout << "You pass :)\n"; }
-void fail() { cout << "You've failed :(\n"; }
-const char * passMessage = ":)";
-const char * failMessage = ":(";
-void interact();
-
-/**********************************************
- * MAIN : The top of the callstack.
- **********************************************/
-int main()
-{
-   char text[8] = "*MAIN**";
-   long number = 123456;
-   void (*pointerFunction)() = fail;
-   const char * message = failMessage;
-
-   // display the initial values of the local variables
-   cout << "main() : " << (void *)main << endl;
-   cout << "\ttext:             " << text              << endl;
-   cout << "\tnumber:           " << number            << endl;
-   cout << "\tmessage:          " << message           << endl;
-   cout << "\tfunction pointer: ";
-   pointerFunction();
-
-   // call the other functions
-   one(number + 111111);     // 234567
-
-   // display the new values of the local variables
-   cout << "main() - after\n";
-   cout << "\ttext:             " << text              << endl;
-   cout << "\tnumber:           " << number            << endl;
-   cout << "\tmessage:          " << message           << endl;
-   cout << "\tfunction pointer: ";
-   pointerFunction();
-
-   return 0;
-}
-
-/************************************************
- * CONVERT TO STRING
- * Convert the data from p into a human-readable string
- * by removing all the unprintable characters and replacing
- * them with a dot
- ***********************************************/
-string displayCharArray(const char * p)
-{
-   string output;
-   for (int i = 0; i < 8; i++)
-       output += string(" ") + (p[i] >= ' ' && p[i] <= 'z' ? p[i] : '.');
-   return output;
-}
-
-/**********************************************
- * ONE : The next item on the call stack
- **********************************************/
-void one(long number)               // 234567
-{
-   char text[8] = "**ONE**";
-
-   cout << "one() : " << (void *)one << endl;
-   cout << "\tmessage: " << (void *)failMessage << endl;
-   cout << "\tfail():  " << (void *)fail        << endl;
-
-   two(number + 111111);    // 345678
-}
-
-/**********************************************
- * TWO : The bottom of the call stack
- **********************************************/
-void two(long number)              // 345678
-{
-   // start your display of the stack from this point
-   long bow = number + 111111;     // 456789
-   char text[8] = "**TWO**";
-   long * pLong = NULL;
-   char * pChar = NULL;
-
-   // header for our table. Use these setw() offsets in your table
-   cout << '[' << setw(2) << 'i' << ']'
-        << setw(15) << "address"
-        << setw(20) << "hexadecimal"
-        << setw(20) << "decimal"
-        << setw(18) << "characters"
-        << endl;
-   cout << "----+"
-        << "---------------+"
-        << "-------------------+"
-        << "-------------------+"
-        << "-----------------+\n";
-   for (long i = 24; i >= -4; i--)   // You may need to change 24 to another number
-   {
-      ////////////////////////////////////////////////
-      // Insert code here to display the callstack
-      
-      //
-      ////////////////////////////////////////////////
-   }
-
-   ////////////////////////////////////////////////
-   // Insert code here to change the variables in main()
-                                                                                
-   // change text in main() to "*main**"
-
-   // change number in main() to 654321
-
-   // change pointerFunction in main() to point to pass
-
-   // change message in main() to point to passMessage
-
-   //
-   ////////////////////////////////////////////////
-}
-
-
-/********************************************************************************************
- * AUXILIARY FUNCTIONS
-********************************************************************************************/
 
 /*********************************************************************
 *  displayMenu()
@@ -147,7 +22,7 @@ void two(long number)              // 345678
 *********************************************************************/
 void displayMenu()
 {
-    cout << "OPTIONS:\n"
+    std::cout << "OPTIONS:\n"
         << "   A  Option 1\n"
         << "   B  Option 2\n"
         << "   Q  Quit\n";
@@ -159,9 +34,9 @@ void displayMenu()
 *  displayPrompt()
 *  Displays passed message.
 *********************************************************************/
-void displayPrompt(string message)
+void displayPrompt(std::string message)
 {
-    cout << message << "\n";
+    std::cout << message << "\n";
     return;
 }
 
@@ -170,9 +45,9 @@ void displayPrompt(string message)
 *  Called by interact()
 *  Displays results.
 *********************************************************************/
-void displayResult(string message)
+void displayResult(std::string message)
 {
-    cout << "TEST RESULT: " << message << "\n\n";
+    std::cout << "TEST RESULT: " << message << "\n\n";
     return;
 }
 
@@ -181,9 +56,9 @@ void displayResult(string message)
 *  Called by interact()
 *  Displays error message.
 *********************************************************************/
-void displayError(string message)
+void displayError(std::string message)
 {
-    cout << message << "\n\n";
+    std::cout << message << "\n\n";
     return;
 }
 
@@ -194,7 +69,7 @@ void displayError(string message)
 *********************************************************************/
 void displayHeader()
 {
-    cout << "\n************ CSE 453 ************\n\n";
+    std::cout << "\n************ CSE 453 ************\n\n";
     return;
 }
 
@@ -220,17 +95,17 @@ void interact()
     displayMenu();
 
     char answer[2] = "";
-    string returnString;
+    std::string returnString;
     do
     {
-        if (cin.fail()) // bad input
+        if (std::cin.fail()) // bad input
         {
-            cin.clear();
-            cin.ignore();
+            std::cin.clear();
+            std::cin.ignore();
             continue;
         }
 
-        cin.getline(answer, 2);
+        std::cin.getline(answer, 2);
         if (islower(answer[0])) { answer[0] = toupper(answer[0]); }
         returnString.clear();
         switch (answer[0])
@@ -270,4 +145,49 @@ void interact()
     } while (answer[0] != 'Q' && answer[0] != 'q');
 
     return;
+}
+
+/*********************************************************************
+*   Main driver of the program
+*********************************************************************/
+int main()
+{
+    //Russells_commit
+    //Calebs_commit
+    interact();
+
+    return 0;
+}
+
+/*************************************
+ * ARRAY VULNERABILTY
+ * 1. There must be an array and an array index variable
+ * 2. The array index variable must be reachable through external input.
+ * 3. There must not be bounds checking on the array index variable.
+ ****************************************/
+void arrayVulnerability(/* feel free to add parameters */)
+{
+}
+
+/**************************************
+ * ARRAY WORKING
+ * Call arrayVulnerability() in a way that does
+ * not yield unexpected behavior
+ *************************************/
+void arrayWorking()
+{
+    arrayVulnerability(/* parameters with non-malicious data */);
+}
+
+/**************************************
+ * ARRAY EXPLOIT
+ * 1. The attacker provides an array index value outside the expected range
+ * 2. The attacker must be able to provide input or redirect
+ *    existing input into the array at the index he provided
+ * 3. The injected value must alter program state in a way
+ *    that is desirable to the attacker
+ *************************************/
+void arrayExploit()
+{
+    arrayVulnerability(/* parameters with malicious data */);
 }

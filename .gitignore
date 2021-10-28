@@ -1,2 +1,15 @@
 .DS_Store
 .vs
+workspace.code-workspace
+.DS_Store
+.vs
+.vscode
+*.pdb
+*.exe
+*.ilk
+*.obj
+*.pdb
+week07/week07
+week07/week07.dSYM/Contents/Info.plist
+week07/week07.dSYM/Contents/Resources/DWARF/week07
+*.user

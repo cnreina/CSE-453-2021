@@ -119,14 +119,17 @@ void two(long number)              // 345678
    {
       ////////////////////////////////////////////////
       // Insert code here to display the callstack
+        // Point pLong to something 'i' steps above bow
         pLong = &bow + i;
+
+        // Point pChar to the same place, but cast it as a char *
         pChar = (char *) pLong;
 
         cout << '[' << setw(2) << i << ']'
-             << setw(15) << pLong
-             << setw(20) << longToHexString(*pLong)
-             << setw(20) << *pLong
-             << setw(18) << displayCharArray(pChar)
+             << setw(15) << pLong                   // Print where pLong is pointing to
+             << setw(20) << longToHexString(*pLong) // Print the contents in hex
+             << setw(20) << *pLong                  // Print the contents in decimal
+             << setw(18) << displayCharArray(pChar) // Treat the contents as a char array and print the result
              << endl;
       //
       ////////////////////////////////////////////////
@@ -136,24 +139,31 @@ void two(long number)              // 345678
    // Insert code here to change the variables in main()
                                                                                 
    // change text in main() to "*main**"
-    pLong = &bow + 28;
-    pChar = (char *) pLong;
-    pChar[1] = 'm';
+   // The table shows "*MAIN**" is 28 steps above bow (THIS MAY CHANGE ON A DIFFERENT MACHINE)
+    pLong = &bow + 28;        // Point pLong 28 steps above bow
+    pChar = (char *) pLong;   // Treat it as a char array
+    pChar[1] = 'm';           // Modify indices 1-4
     pChar[2] = 'a';
     pChar[3] = 'i';
-    pChar[4] = 'n';
+    pChar[4] = 'n';           // text in main is now "*main**"
     
    // change number in main() to 654321
-   pLong = &bow + 25;
-   *pLong = 654321;
+   // The table shows 123456 is 25 steps above bow (again, this could be different for a separate machine)
+   pLong = &bow + 25;         // Point pLong 25 steps above bow
+   *pLong = 654321;           // Change the value to 654321
+                              // number in main is now 654321
 
    // change pointerFunction in main() to point to pass
-   pLong = &bow + 26;
-   *pLong = (long) &pass;
+   // The table shows that pointerFunction is 26 steps above bow (same as the rest, this might be different)
+   pLong = &bow + 26;         // Point pLong 26 steps above bow
+   *pLong = (long) &pass;     // Change the value of pLong to the address of pass
+                              // pointerFunction in main is now pointed to pass
 
    // change message in main() to point to passMessage
-   pLong = &bow + 27;
-   *pLong = (long) passMessage;
+   // The table shows that message is 27 steps above bow
+   pLong = &bow + 27;          // Point pLong 27 steps above bow
+   *pLong = (long) passMessage;// Change the value of pLong to the address of passMessage
+                               // message in main is now pointed to passMessage
 
    //cout << pPointAtMessage << endl;
    //

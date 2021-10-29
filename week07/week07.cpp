@@ -1,3 +1,17 @@
+
+/*********************************************************************
+*   CSE 453
+*
+*   Carlos N Reina
+*   Adrian Whetten
+*   Jordan Burdett
+*   Caleb Georgeson
+*   Russell Roberts
+*   Stephen Ellis
+*   Orion Christensen
+*
+*********************************************************************/
+
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -15,31 +29,31 @@ const char * failMessage = ":(";
  **********************************************/
 int main()
 {
-   char text[8] = "*MAIN**";
-   long number = 123456;
-   void (*pointerFunction)() = fail;
-   const char * message = failMessage;
+    char text[8] = "*MAIN**";
+    long number = 123456;
+    void (*pointerFunction)() = fail;
+    const char* message = failMessage;
 
-   // display the initial values of the local variables
-   cout << "main() : " << (void *)main << endl;
-   cout << "\ttext:             " << text              << endl;
-   cout << "\tnumber:           " << number            << endl;
-   cout << "\tmessage:          " << message           << endl;
-   cout << "\tfunction pointer: ";
-   pointerFunction();
+    // display the initial values of the local variables
+    cout << "main() : " << (void*)main << endl;
+    cout << "\ttext:             " << text << endl;
+    cout << "\tnumber:           " << number << endl;
+    cout << "\tmessage:          " << message << endl;
+    cout << "\tfunction pointer: ";
+    pointerFunction();
 
-   // call the other functions
-   one(number + 111111);     // 234567
+    // call the other functions
+    one(number + 111111);     // 234567
 
-   // display the new values of the local variables
-   cout << "main() - after\n";
-   cout << "\ttext:             " << text              << endl;
-   cout << "\tnumber:           " << number            << endl;
-   cout << "\tmessage:          " << message           << endl;
-   cout << "\tfunction pointer: ";
-   pointerFunction();
+    // display the new values of the local variables
+    cout << "main() - after\n";
+    cout << "\ttext:             " << text << endl;
+    cout << "\tnumber:           " << number << endl;
+    cout << "\tmessage:          " << message << endl;
+    cout << "\tfunction pointer: ";
+    pointerFunction();
 
-   return 0;
+    return 0;
 }
 
 /************************************************
@@ -48,12 +62,12 @@ int main()
  * by removing all the unprintable characters and replacing
  * them with a dot
  ***********************************************/
-string displayCharArray(const char * p)
+string displayCharArray(const char* p)
 {
-   string output;
-   for (int i = 0; i < 8; i++)
-       output += string(" ") + (p[i] >= ' ' && p[i] <= 'z' ? p[i] : '.');
-   return output;
+    string output;
+    for (int i = 0; i < 8; i++)
+        output += string(" ") + (p[i] >= ' ' && p[i] <= 'z' ? p[i] : '.');
+    return output;
 }
 
 string longToHexString(long number)
@@ -69,13 +83,13 @@ string longToHexString(long number)
  **********************************************/
 void one(long number)               // 234567
 {
-   char text[8] = "**ONE**";
+    char text[8] = "**ONE**";
 
-   cout << "one() : " << (void *)one << endl;
-   cout << "\tmessage: " << (void *)failMessage << endl;
-   cout << "\tfail():  " << (void *)fail        << endl;
+    cout << "one() : " << (void*)one << endl;
+    cout << "\tmessage: " << (void*)failMessage << endl;
+    cout << "\tfail():  " << (void*)fail << endl;
 
-   two(number + 111111);    // 345678
+    two(number + 111111);    // 345678
 }
 
 /**********************************************
@@ -83,20 +97,20 @@ void one(long number)               // 234567
  **********************************************/
 void two(long number)              // 345678
 {
-   // start your display of the stack from this point
-   long bow = number + 111111;     // 456789
-   char text[8] = "**TWO**";
-   long * pLong = NULL;
-   char * pChar = NULL;
+    // start your display of the stack from this point
+    long bow = number + 111111;     // 456789
+    char text[8] = "**TWO**";
+    long* pLong = NULL;
+    char* pChar = NULL;
 
-   // header for our table. Use these setw() offsets in your table
-   cout << '[' << setw(2) << 'i' << ']'
+    // header for our table. Use these setw() offsets in your table
+    cout << '[' << setw(2) << 'i' << ']'
         << setw(15) << "address"
         << setw(20) << "hexadecimal"
         << setw(20) << "decimal"
         << setw(18) << "characters"
         << endl;
-   cout << "----+"
+    cout << "----+"
         << "---------------+"
         << "-------------------+"
         << "-------------------+"

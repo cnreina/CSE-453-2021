@@ -1,23 +1,6 @@
-
-/*********************************************************************
-*   CSE 453 W07 Lab: Memory Organization
-*   https://byui-cse.github.io/cse453-course/Ponder/453.07.Lab.html
-* 
-*   Carlos N Reina
-*   Adrian Whetten
-*   Jordan Burdett 
-*   Caleb Georgeson 
-*   Russell Roberts 
-*   Stephen Ellis 
-*   Orion Christensen    
-*
-*********************************************************************/
-
 #include <iostream>
-#include <string>
 #include <iomanip>
-#include <cassert>
-
+#include <string>
 using namespace std;
 
 void one(long number);
@@ -26,7 +9,6 @@ void pass() { cout << "You pass :)\n"; }
 void fail() { cout << "You've failed :(\n"; }
 const char * passMessage = ":)";
 const char * failMessage = ":(";
-void interact();
 
 /**********************************************
  * MAIN : The top of the callstack.
@@ -74,6 +56,14 @@ string displayCharArray(const char * p)
    return output;
 }
 
+string longToHexString(long number)
+{
+    stringstream stream;
+    stream << hex << number;
+
+    return "0x" + stream.str();
+}
+
 /**********************************************
  * ONE : The next item on the call stack
  **********************************************/
@@ -111,11 +101,19 @@ void two(long number)              // 345678
         << "-------------------+"
         << "-------------------+"
         << "-----------------+\n";
-   for (long i = 24; i >= -4; i--)   // You may need to change 24 to another number
+   for (long i = 30; i >= -4; i--)   // You may need to change 24 to another number
    {
       ////////////////////////////////////////////////
       // Insert code here to display the callstack
-      
+        pLong = &bow + i;
+        pChar = (char *) pLong;
+
+        cout << '[' << setw(2) << i << ']'
+             << setw(15) << pLong
+             << setw(20) << longToHexString(*pLong)
+             << setw(20) << *pLong
+             << setw(18) << displayCharArray(pChar)
+             << endl;
       //
       ////////////////////////////////////////////////
    }
@@ -124,150 +122,26 @@ void two(long number)              // 345678
    // Insert code here to change the variables in main()
                                                                                 
    // change text in main() to "*main**"
-
+    pLong = &bow + 28;
+    pChar = (char *) pLong;
+    pChar[1] = 'm';
+    pChar[2] = 'a';
+    pChar[3] = 'i';
+    pChar[4] = 'n';
+    
    // change number in main() to 654321
+   pLong = &bow + 25;
+   *pLong = 654321;
 
    // change pointerFunction in main() to point to pass
+   pLong = &bow + 26;
+   *pLong = (long) &pass;
 
    // change message in main() to point to passMessage
+   pLong = &bow + 27;
+   *pLong = (long) passMessage;
 
+   //cout << pPointAtMessage << endl;
    //
    ////////////////////////////////////////////////
-}
-
-
-/********************************************************************************************
- * AUXILIARY FUNCTIONS
-********************************************************************************************/
-
-/*********************************************************************
-*  displayMenu()
-*  Called by interact()
-*  Displays menu options.
-*********************************************************************/
-void displayMenu()
-{
-    cout << "OPTIONS:\n"
-        << "   A  Option 1\n"
-        << "   B  Option 2\n"
-        << "   Q  Quit\n";
-
-    return;
-}
-
-/*********************************************************************
-*  displayPrompt()
-*  Displays passed message.
-*********************************************************************/
-void displayPrompt(string message)
-{
-    cout << message << "\n";
-    return;
-}
-
-/*********************************************************************
-*  displayResult()
-*  Called by interact()
-*  Displays results.
-*********************************************************************/
-void displayResult(string message)
-{
-    cout << "TEST RESULT: " << message << "\n\n";
-    return;
-}
-
-/*********************************************************************
-*  displayError()
-*  Called by interact()
-*  Displays error message.
-*********************************************************************/
-void displayError(string message)
-{
-    cout << message << "\n\n";
-    return;
-}
-
-/*********************************************************************
-*  displayHeader()
-*  Called by interact()
-*  Displays app identifier.
-*********************************************************************/
-void displayHeader()
-{
-    cout << "\n************ CSE 453 ************\n\n";
-    return;
-}
-
-/*********************************************************************
-*  clearScreen()
-*  Called by interact()
-*  Clears the screen.
-*********************************************************************/
-void clearScreen()
-{
-    if (system("CLS")) { system("clear"); }
-    return;
-}
-
-/*********************************************************************
-*   interact(), until user types "Q".
-*   Called by main.
-*********************************************************************/
-void interact()
-{
-    clearScreen();
-    displayHeader();
-    displayMenu();
-
-    char answer[2] = "";
-    string returnString;
-    do
-    {
-        if (cin.fail()) // bad input
-        {
-            cin.clear();
-            cin.ignore();
-            continue;
-        }
-
-        cin.getline(answer, 2);
-        if (islower(answer[0])) { answer[0] = toupper(answer[0]); }
-        returnString.clear();
-        switch (answer[0])
-        {
-        case '\0': // no input
-            clearScreen();
-            displayHeader();
-            displayError("ERROR: Invalid command");
-            displayMenu();
-            break;
-
-        case 'A':
-            clearScreen();
-            displayHeader();
-            displayError("ERROR: Not implemented");
-            displayMenu();
-            break;
-
-        case 'B':
-            clearScreen();
-            displayHeader();
-            displayError("ERROR: Not implemented");
-            displayMenu();
-            break;
-
-        case 'Q': // Quit
-            clearScreen();
-            break;
-
-        default:
-            clearScreen();
-            displayHeader();
-            displayError("ERROR: Invalid command");
-            displayMenu();
-            break;
-        }
-    } while (answer[0] != 'Q' && answer[0] != 'q');
-
-    return;
 }

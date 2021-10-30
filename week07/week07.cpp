@@ -31,9 +31,9 @@ const char * failMessage = ":(";
  **********************************************/
 int main()
 {
+    
     char text[8] = "*MAIN**";
     long number = 123456;
-    //long number = 654321;
     void (*pointerFunction)() = fail;
     const char* message = failMessage;
 
@@ -69,11 +69,15 @@ string displayCharArray(const char* p)
 {
     string output;
     for (int i = 0; i < 8; i++)
-        output += string(" ") + ((p[i] >= ' ' && p[i] <= 'z') || 
-        (p[i] >= ' ' && p[i] <= 'Z' || p[i] >= '0' && p[i] <= '9') ? p[i] : '.');
+        output += string(" ") + (p[i] >= ' ' && p[i] <= 'z' ? p[i] : '.');
     return output;
 }
 
+
+/*************************************************
+ * Long to HEX
+ * Takes a long and converts it to a Hex string
+ *************************************************/
 string longToHexString(long number)
 {
     stringstream stream;
@@ -82,6 +86,11 @@ string longToHexString(long number)
     return "0x" + stream.str();
 }
 
+/*************************************************
+ * Get Text Step
+ * Searches the stack for "*MAIN**"
+ * Returns the number of steps above bow
+ *************************************************/
 int getTextStep(long &bow) {
     long * pLong;
     char * pChar;
@@ -100,6 +109,11 @@ int getTextStep(long &bow) {
     return step;
 }
 
+/*************************************************
+ * Get Number Step
+ * Searches the stack for 123456
+ * Returns the number of steps above bow
+ *************************************************/
 int getNumberStep(long &bow) {
     long * pLong;
 
@@ -116,6 +130,12 @@ int getNumberStep(long &bow) {
     return step;
 }
 
+
+/*************************************************
+ * Get Function Step
+ * Searches the stack for the address of fail()
+ * Returns the number of steps above bow
+ *************************************************/
 int getFunctionStep(long &bow) {
     long * pLong;
 
@@ -132,6 +152,11 @@ int getFunctionStep(long &bow) {
     return step;
 }
 
+/*************************************************
+ * Get Message Step
+ * Searches the stack for the address of passMessage
+ * Returns the number of steps above bow
+ *************************************************/
 int getMessageStep(long &bow) {
     long * pLong;
 
@@ -171,6 +196,7 @@ void two(long number)              // 345678
     char text[8] = "**TWO**";
     long* pLong = NULL;
     char* pChar = NULL;
+    
 
     // header for our table. Use these setw() offsets in your table
     cout << '[' << setw(2) << 'i' << ']'

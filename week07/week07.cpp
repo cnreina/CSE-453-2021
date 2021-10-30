@@ -16,6 +16,7 @@
 #include <iomanip>
 #include <string>
 #include <sstream>
+#include <cassert>
 using namespace std;
 
 void one(long number);

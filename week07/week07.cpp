@@ -15,6 +15,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <sstream>
 using namespace std;
 
 void one(long number);
@@ -102,6 +103,10 @@ void two(long number)              // 345678
     char text[8] = "**TWO**";
     long* pLong = NULL;
     char* pChar = NULL;
+    long spotForMain;
+    long spotForNumberToChange;
+    long spotForPass;
+    long spotForPassMessage;
 
     // header for our table. Use these setw() offsets in your table
     cout << '[' << setw(2) << 'i' << ']'
@@ -115,7 +120,7 @@ void two(long number)              // 345678
         << "-------------------+"
         << "-------------------+"
         << "-----------------+\n";
-   for (long i = 30; i >= -4; i--)   // You may need to change 24 to another number
+   for (long i = 135; i >= -4; i--)   // You may need to change 24 to another number
    {
       ////////////////////////////////////////////////
       // Insert code here to display the callstack
@@ -133,14 +138,40 @@ void two(long number)              // 345678
              << endl;
       //
       ////////////////////////////////////////////////
+        pChar = (char *) pLong;
+
+        if (pChar[1] == 'M' && pChar[2] == 'A' && pChar[3] == 'I' && pChar[4] == 'N')
+        {
+
+            spotForMain = i;
+
+        }
+
+        if (*pLong == 123456)
+        {
+
+            spotForNumberToChange = i;
+
+        }
+
+        if (pChar[1] == 'Y' && pChar[2] =='o' && pChar[3] == 'u')//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        {
+
+            spotForPassMessage = i;
+
+        }
+
+
    }
 
+
+   cout << "spotForPassMessage" << spotForPassMessage << endl;
    ////////////////////////////////////////////////
    // Insert code here to change the variables in main()
                                                                                 
    // change text in main() to "*main**"
    // The table shows "*MAIN**" is 28 steps above bow (THIS MAY CHANGE ON A DIFFERENT MACHINE)
-    pLong = &bow + 28;        // Point pLong 28 steps above bow
+    pLong = &bow + spotForMain;        // Point pLong 28 steps above bow it was 133 for orion
     pChar = (char *) pLong;   // Treat it as a char array
     pChar[1] = 'm';           // Modify indices 1-4
     pChar[2] = 'a';
@@ -149,19 +180,19 @@ void two(long number)              // 345678
     
    // change number in main() to 654321
    // The table shows 123456 is 25 steps above bow (again, this could be different for a separate machine)
-   pLong = &bow + 25;         // Point pLong 25 steps above bow
+   pLong = &bow + spotForNumberToChange;         // Point pLong 25 steps above bow for orion its 130
    *pLong = 654321;           // Change the value to 654321
                               // number in main is now 654321
 
    // change pointerFunction in main() to point to pass
    // The table shows that pointerFunction is 26 steps above bow (same as the rest, this might be different)
-   pLong = &bow + 26;         // Point pLong 26 steps above bow
+   pLong = &bow + 127;         // Point pLong 26 steps above bow for orion its 127
    *pLong = (long) &pass;     // Change the value of pLong to the address of pass
                               // pointerFunction in main is now pointed to pass
 
    // change message in main() to point to passMessage
    // The table shows that message is 27 steps above bow
-   pLong = &bow + 27;          // Point pLong 27 steps above bow
+   pLong = &bow + 124;          // Point pLong 27 steps above bow for orion its 124
    *pLong = (long) passMessage;// Change the value of pLong to the address of passMessage
                                // message in main is now pointed to passMessage
 

@@ -32,7 +32,8 @@ const char * failMessage = ":(";
 int main()
 {
     char text[8] = "*MAIN**";
-    long number = 123456;
+    // long number = 123456;
+    long number = 654321;
     void (*pointerFunction)() = fail;
     const char* message = failMessage;
 

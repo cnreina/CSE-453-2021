@@ -69,7 +69,7 @@ string displayCharArray(const char* p)
 {
     string output;
     for (int i = 0; i < 8; i++)
-        output += string(" ") + (p[i] >= ' ' && p[i] <= 'z' ? p[i] : '.');
+        output += string(" ") + ((p[i] >= ' ' && p[i] <= 'z') || (p[i] >= ' ' && p[i] <= 'Z') ? p[i] : '.');
     return output;
 }
 

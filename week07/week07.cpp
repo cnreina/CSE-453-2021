@@ -34,7 +34,8 @@ int main()
     char text[8] = "*MAIN**";
     // long number = 123456;
     long number = 654321;
-    void (*pointerFunction)() = fail;
+    // void (*pointerFunction)() = fail;
+    void (*pointerFunction)() = pass;
     const char* message = failMessage;
 
     // display the initial values of the local variables
@@ -69,7 +70,8 @@ string displayCharArray(const char* p)
 {
     string output;
     for (int i = 0; i < 8; i++)
-        output += string(" ") + ((p[i] >= ' ' && p[i] <= 'z') || (p[i] >= ' ' && p[i] <= 'Z') ? p[i] : '.');
+        output += string(" ") + ((p[i] >= ' ' && p[i] <= 'z') || 
+        (p[i] >= ' ' && p[i] <= 'Z' || p[i] >= '0' && p[i] <= '9') ? p[i] : '.');
     return output;
 }
 

@@ -32,8 +32,8 @@ const char * failMessage = ":(";
 int main()
 {
     char text[8] = "*MAIN**";
-    // long number = 123456;
-    long number = 654321;
+    long number = 123456;
+    //long number = 654321;
     void (*pointerFunction)() = fail;
     const char* message = failMessage;
 
@@ -80,6 +80,71 @@ string longToHexString(long number)
     stream << hex << number;
 
     return "0x" + stream.str();
+}
+
+int getTextStep(long &bow) {
+    long * pLong;
+    char * pChar;
+
+    int step = 0;
+
+    for (int i = 0; i < 30; i++) {
+        pLong = &bow + i;
+        pChar = (char *) pLong;
+        string check = displayCharArray(pChar);
+        if (check == " * M A I N * * .") {
+            step = i;
+        }
+    }
+
+    return step;
+}
+
+int getNumberStep(long &bow) {
+    long * pLong;
+
+    int step = 0;
+
+    for (int i = 0; i < 30; i++) {
+        pLong = &bow + i;
+        long check = *pLong;
+        if (check == 123456) {
+            step = i;
+        }
+    }
+
+    return step;
+}
+
+int getFunctionStep(long &bow) {
+    long * pLong;
+
+    int step = 0;
+
+    for (int i = 0; i < 30; i++) {
+        pLong = &bow + i;
+        long check = *pLong;
+        if (check == (long) &fail) {
+            step = i;
+        }
+    }
+
+    return step;
+}
+
+int getMessageStep(long &bow) {
+    long * pLong;
+
+    int step = 0;
+
+    for (int i = 0; i < 30; i++) {
+        pLong = &bow + i;
+        if (*pLong == (long) failMessage) {
+            step = i;
+        }
+    }
+
+    return step;
 }
 
 /**********************************************
@@ -143,33 +208,28 @@ void two(long number)              // 345678
    // Insert code here to change the variables in main()
                                                                                 
    // change text in main() to "*main**"
-   // The table shows "*MAIN**" is 28 steps above bow (THIS MAY CHANGE ON A DIFFERENT MACHINE)
-    pLong = &bow + 28;        // Point pLong 28 steps above bow
-    pChar = (char *) pLong;   // Treat it as a char array
-    pChar[1] = 'm';           // Modify indices 1-4
+    pLong = &bow + getTextStep(bow);    // Find the step
+    pChar = (char *) pLong;             // Treat it as a char array
+    pChar[1] = 'm';                     // Modify indices 1-4
     pChar[2] = 'a';
     pChar[3] = 'i';
-    pChar[4] = 'n';           // text in main is now "*main**"
+    pChar[4] = 'n';                     // text in main is now "*main**"
     
    // change number in main() to 654321
-   // The table shows 123456 is 25 steps above bow (again, this could be different for a separate machine)
-   pLong = &bow + 25;         // Point pLong 25 steps above bow
-   *pLong = 654321;           // Change the value to 654321
-                              // number in main is now 654321
+   pLong = &bow + getNumberStep(bow);   // Find the step
+   *pLong = 654321;                     // Change the value to 654321
+                                        // number in main is now 654321
 
    // change pointerFunction in main() to point to pass
-   // The table shows that pointerFunction is 26 steps above bow (same as the rest, this might be different)
-   pLong = &bow + 26;         // Point pLong 26 steps above bow
-   *pLong = (long) &pass;     // Change the value of pLong to the address of pass
-                              // pointerFunction in main is now pointed to pass
+   pLong = &bow + getFunctionStep(bow); // Find the step
+   *pLong = (long) &pass;               // Change the value of pLong to the address of pass
+                                        // pointerFunction in main is now pointed to pass
 
    // change message in main() to point to passMessage
-   // The table shows that message is 27 steps above bow
-   pLong = &bow + 27;          // Point pLong 27 steps above bow
-   *pLong = (long) passMessage;// Change the value of pLong to the address of passMessage
-                               // message in main is now pointed to passMessage
+   pLong = &bow + getMessageStep(bow);  // Find the step
+   *pLong = (long) passMessage;         // Change the value of pLong to the address of passMessage
+                                        // message in main is now pointed to passMessage
 
-   //cout << pPointAtMessage << endl;
    //
    ////////////////////////////////////////////////
 }

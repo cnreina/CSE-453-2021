@@ -17,15 +17,30 @@
 #include <string>
 using namespace std;
 
+void interact();
+void displayResult(std::string message);
+void displayAboutUs();
+void displayMenu();
+void displayHeader();
+void clearScreen();
+
 void testArrayIndex();
 void testPointerSubterfuge();
 void testArcInjection();
 void testVTableSpraying();
 void testStackSmashing();
-void testHeapSpraying() {};
-void testIntegerOverflow() {};
-void testAnsiUnicode() {};
+void testHeapSpraying();
+void testIntegerOverflow();
+void testAnsiUnicode();
 
+/**********************************************
+ * MAIN : 
+ **********************************************/
+int main()
+{
+    interact ();
+    return 0;
+}
 
 /*********************************************************************
 *  vtable for my vtable smash, thank me boys, 
@@ -332,15 +347,6 @@ void interact()
     return;
 }
 
-/**********************************************
- * MAIN : 
- **********************************************/
-int main()
-{
 
-    interact ();
-
-    return 0;
-}
 
 

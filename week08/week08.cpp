@@ -161,6 +161,41 @@ void testStackSmashing()
 
 }
 
+
+void testHeapSpraying(){};
+void testIntegerOverflow(){};
+void testAnsiUnicode(){};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*********************************************************************
 *  clearScreen()
 *  Called by interact()

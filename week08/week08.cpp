@@ -89,6 +89,10 @@ int main()
 /*********************************************************************
 *  ArrayIndex hack  from the book, page 137
 *  Called by interact()
+*  
+*  is vulnerable to an ARC injection attack
+*  list all the requirements for ARC injection and make sure that your
+*  vulnerability function exhibits them all
 *********************************************************************/
 void arrayVulnerability() 
 {
@@ -98,6 +102,51 @@ void arrayVulnerability()
     int gimmieIndex;
     cin >> gimmieIndex;
     array[gimmieIndex] = -1;  //book says "if index == 4, problem! therefore for us, if index == 5 problem?"
+
+}
+
+/*********************************************************************
+*  calls arrayVulnerability
+calls arcVulnerability() with non-malicious input. As with arrayWorking(), 
+the expectation is that the vulnerability function will behave normally. 
+Provide output from this function.
+*********************************************************************/
+void arcWorking()
+{
+
+}
+
+/*********************************************************************
+*  calls arrayVulnerability
+calls arcVulnerability(). As with the array index exploit, list all 
+the requirements for exploiting ARC injection and make sure that your 
+expoit function exhibits them all. 
+Provide output from this function.
+*********************************************************************/
+void arcExploit()
+{
+
+}
+
+
+
+/*********************************************************************
+*  ARC injection hack zoh my gato! we blow up iron man's cold fusion reactor! from the book, page 141
+*  Called by interact()
+*********************************************************************/
+void testArcInjection()
+{
+
+    long myVulnerableBuffer[8];
+    void (*myPointerMethod)() = naive;
+
+    cin >> myVulnerableBuffer[8];  
+    
+    /*pretty sure above we expose the buffer, 
+    and therefore the pointer and method it executes, naked, cold, and afraid
+    to the depraved wiles of every nefarious, skulldugerous, and malcisously nasty hacker with their pointy teeth and hairy hands with claws scraped with grit in their fingernails!*/
+
+    myPointerMethod();
 
 }
 
@@ -117,26 +166,6 @@ void testPointerSubterfuge()
     which is 12 charand getline is 17, so my "princess cimorene" is 17 so i made the 17 in getline into a 19*/
 
     cout << public << endl;
-
-}
-
-/*********************************************************************
-*  ARC injection hack zoh my gato! we blow up iron man's cold fusion reactor! from the book, page 141
-*  Called by interact()
-*********************************************************************/
-void testArcInjection()
-{
-
-    long myVulnerableBuffer[8];
-    void (*myPointerMethod)() = naive;
-
-    cin >> myVulnerableBuffer[8];  
-    
-    /*pretty sure above we expose the buffer, 
-    and therefore the pointer and method it executes, naked, cold, and afraid
-    to the depraved wiles of every nefarious, skulldugerous, and malcisously nasty hacker with their pointy teeth and hairy hands with claws scraped with grit in their fingernails!*/
-
-    myPointerMethod();
 
 }
 
@@ -177,15 +206,6 @@ void testStackSmashing()
 void testHeapSpraying(){};
 void testIntegerOverflow(){};
 void testAnsiUnicode(){};
-
-
-
-
-
-
-
-
-
 
 
 

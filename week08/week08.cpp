@@ -37,8 +37,8 @@ void displayHeader();
 void clearScreen();
 
 void testArrayIndex();
-void testPointerSubterfuge();
-void testArcInjection();
+void pointerSubterfugeVulnerability();
+void arcVulnerability();
 void testVTableSpraying();
 void testStackSmashing();
 void testHeapSpraying();
@@ -90,13 +90,13 @@ int main()
 *  ArrayIndex hack  from the book, page 137
 *  Called by interact()
 *********************************************************************/
-void arrayVulnerability() 
+void arrayVulnerability(int gimmieIndex) 
 {
     int sheepArray[5];  // a vulnerable soft meek array like a sheep
     bool crappyAuthenticationThatMakesThingsWorse = false;  // I guess to do array index, we have to have a check that actually makes the array vulnerable rather than safe?
 
-    int gimmieIndex;
-    cin >> gimmieIndex;
+    //int gimmieIndex;
+    //cin >> gimmieIndex;
     sheepArray[gimmieIndex] = -1;  //book says "if index == 4, problem! therefore for us, if index == 5 problem?"
 
 }
@@ -105,7 +105,7 @@ void arrayVulnerability()
 *  pointer subterfuge hack from the quiz question 8
 *  Called by interact()
 *********************************************************************/
-void testPointerSubterfuge()
+void pointerSubterfugeVulnerability()
 {
 
     char myArray[7];  // quiz question 8 has array[8] i did 7 so we aren't "copying"
@@ -124,7 +124,7 @@ void testPointerSubterfuge()
 *  ARC injection hack zoh my gato! we blow up iron man's cold fusion reactor! from the book, page 141
 *  Called by interact()
 *********************************************************************/
-void testArcInjection()
+void arcVulnerability()
 {
 
     long myVulnerableBuffer[8];
@@ -212,6 +212,23 @@ void testAnsiUnicode(){};
 *********************************************************************/
 void testArrayIndex() 
 {
+    int gimmieIndex;
+
+    arrayVulnerability(gimmieIndex);
+
+}
+
+void testPointerSubterfuge()
+{
+
+    pointerSubterfugeVulnerability();  // needs parameter
+
+}
+
+void arcVulnerability()
+{
+
+    arcVuln
 
 }
 
@@ -332,14 +349,14 @@ void interact()
         case 'B': // Pointer Subterfuge
             clearScreen();
             displayHeader();
-            testPointerSubterfuge();
+            pointerSubterfugeVulnerability();
             displayMenu();
             break;
 
         case 'C': // Arc Injection
             clearScreen();
             displayHeader();
-            testArcInjection();
+            arcVulnerability();
             displayMenu();
             break;
 

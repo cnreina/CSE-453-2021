@@ -13,3 +13,6 @@ week07/week07
 week07/week07.dSYM/Contents/Info.plist
 week07/week07.dSYM/Contents/Resources/DWARF/week07
 *.user
+a.out
+*.dSYM
+*App

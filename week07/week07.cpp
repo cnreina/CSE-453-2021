@@ -210,7 +210,7 @@ void two(long number)              // 345678
         << "-------------------+"
         << "-------------------+"
         << "-----------------+\n";
-   for (long i = 30; i >= -4; i--)   // You may need to change 24 to another number
+   for (long i = 135; i >= -16; i--)   // You may need to change 24 to another number
    {
       ////////////////////////////////////////////////
       // Insert code here to display the callstack

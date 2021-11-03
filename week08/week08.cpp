@@ -17,67 +17,200 @@
 #include <string>
 using namespace std;
 
-/*************************************
- * ARRAY VULNERABILTY
- * 1. There must be an array and an array index variable
- * 2. The array index variable must be reachable through external input.
- * 3. There must not be bounds checking on the array index variable.
- ****************************************/
-void arrayVulnerability(/* feel free to add parameters */)
+
+void testArrayIndex() {};
+void testPointerSubterfuge() {};
+void testArcInjection() {};
+void testVTableSpraying() {};
+void testStackSmashing() {};
+void testHeapSpraying() {};
+void testIntegerOverflow() {};
+void testAnsiUnicode() {};
+
+
+/*********************************************************************
+*  clearScreen()
+*  Called by interact()
+*  Clears the screen.
+*********************************************************************/
+void clearScreen()
 {
+    if (system("CLS")) { system("clear"); }
+    return;
 }
 
-/**************************************
- * ARRAY WORKING
- * Call arrayVulnerability() in a way that does
- * not yield unexpected behavior
- *************************************/
-void arrayWorking()
+/*********************************************************************
+*  displayHeader()
+*  Called by interact()
+*  Displays app identifier.
+*********************************************************************/
+void displayHeader()
 {
-   arrayVulnerability(/* parameters with non-malicious data */);
+    cout << "\n************ CSE 453 ************\n\n";
+    return;
 }
 
-/**************************************
- * ARRAY EXPLOIT
- * 1. The attacker provides an array index value outside the expected range
- * 2. The attacker must be able to provide input or redirect
- *    existing input into the array at the index he provided
- * 3. The injected value must alter program state in a way
- *    that is desirable to the attacker
- *************************************/
-void arrayExploit()
+/*********************************************************************
+*  displayMenu()
+*  Called by interact()
+*  Displays menu options.
+*********************************************************************/
+void displayMenu()
 {
-   arrayVulnerability(/* parameters with malicious data */);
+    cout << "OPTIONS:\n"
+        << "   A  Array Index\n"
+        << "   B  Pointer Subterfuge\n"
+        << "   C  ARC Injection\n"
+        << "   D  VTable Spraying\n"
+        << "   E  Stack Smashing\n"
+        << "   F  Heap Spraying\n"
+        << "   G  Integer Overflow\n"
+        << "   H  ANSI-Unicode Conversion\n"
+        << "   I  About Us\n"
+        << "   Q  Quit\n\n";
+
+    return;
 }
 
-
-// ARC Injection
-
-/**************************************
- * arcVulnerability
- * 
- *************************************/
-void arcVulnerability()
+/*********************************************************************
+*  displayAboutUs()
+*  Called by interact()
+*  Displays authors.
+*********************************************************************/
+void displayAboutUs()
 {
-   
+    cout << "AUTHORS:\n"
+        << "   Carlos N Reina\n"
+        << "   Adrian Whetten\n"
+        << "   Jordan Burdett\n"
+        << "   Caleb Georgeson\n"
+        << "   Orion Christensen\n"
+        << "   Russell Roberts\n"
+        << "   Stephen Ellis\n\n";
+
+    return;
 }
 
-/**************************************
- * arcWorking
- * 
- *************************************/
-void arcWorking()
+/*********************************************************************
+*  displayResult()
+*  Called by interact()
+*  Displays results.
+*********************************************************************/
+void displayResult(std::string message)
 {
-   
+    std::cout << message << "\n\n";
+    return;
 }
 
-/**************************************
- * arcExploit
- * 
- *************************************/
-void arcExploit()
+/*********************************************************************
+*   interact(), until user types "Q".
+*   Called by main.
+*********************************************************************/
+void interact()
 {
-   
+    clearScreen();
+    displayHeader();
+    displayMenu();
+
+    char answer[2] = "";
+    string returnString;
+    do
+    {
+        if (cin.fail()) // bad input
+        {
+            cin.clear();
+            cin.ignore();
+            continue;
+        }
+
+        cin.getline(answer, 2);
+        if (islower(answer[0])) { answer[0] = toupper(answer[0]); }
+        returnString.clear();
+        switch (answer[0])
+        {
+        case '\0': // no input
+            clearScreen();
+            displayHeader();
+            displayMenu();
+            break;
+
+        case 'A': // Array Index
+            clearScreen();
+            displayHeader();
+            testArrayIndex();
+            displayMenu();
+            break;
+
+        case 'B': // Pointer Subterfuge
+            clearScreen();
+            displayHeader();
+            testPointerSubterfuge();
+            displayMenu();
+            break;
+
+        case 'C': // Arc Injection
+            clearScreen();
+            displayHeader();
+            testArcInjection();
+            displayMenu();
+            break;
+
+        case 'D': // VTable Spraying
+            clearScreen();
+            displayHeader();
+            testVTableSpraying();
+            displayMenu();
+            break;
+
+        case 'E': // Stack Smashing
+            clearScreen();
+            displayHeader();
+            testStackSmashing();
+            displayMenu();
+            break;
+
+        case 'F': // Heap Spraying
+            clearScreen();
+            displayHeader();
+            testHeapSpraying();
+            displayMenu();
+            break;
+
+        case 'G': // Integer Overflow
+            clearScreen();
+            displayHeader();
+            testIntegerOverflow();
+            displayMenu();
+            break; 
+
+        case 'H': // ANSI-Unicode Conversion
+            clearScreen();
+            displayHeader();
+            testAnsiUnicode();
+            displayMenu();
+            break; 
+
+        case 'I': // About Us
+            clearScreen();
+            displayHeader();
+            displayAboutUs();
+            displayMenu();
+            break;
+
+        case 'Q': // Quit
+            clearScreen();
+            break;
+
+        default:
+            clearScreen();
+            displayHeader();
+            displayResult("ERROR: Invalid command");
+            displayMenu();
+            break;
+        }
+    } while (answer[0] != 'Q' && answer[0] != 'q');
+
+    return;
 }
 
 /**********************************************
@@ -85,5 +218,8 @@ void arcExploit()
  **********************************************/
 int main()
 {
+
+    interact ();
+
     return 0;
 }

@@ -10,11 +10,23 @@
 *   Stephen Ellis
 *   Orion Christensen
 *
+*   Application to demonstrate vulnerabilities and how to exploit them:
+*
+*   1 Array Index
+*   2 Pointer Subterfuge (already done for you. See the textbook)
+*   3 ARC Injection
+*   4 VTable Spraying
+*   5 Stack Smashing
+*   6 Heap Spraying
+*   7 Integer Overflow
+*   8 ANSI-Unicode Conversion
+*
 *********************************************************************/
 
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <array>
 using namespace std;
 
 void interact();
@@ -72,13 +84,14 @@ int main()
     return 0;
 }
 
+
+
 /*********************************************************************
 *  ArrayIndex hack  from the book, page 137
 *  Called by interact()
 *********************************************************************/
-void testArrayIndex() 
+void arrayVulnerability() 
 {
-
     int sheepArray[5];  // a vulnerable soft meek array like a sheep
     bool crappyAuthenticationThatMakesThingsWorse = false;  // I guess to do array index, we have to have a check that actually makes the array vulnerable rather than safe?
 
@@ -87,7 +100,6 @@ void testArrayIndex()
     sheepArray[gimmieIndex] = -1;  //book says "if index == 4, problem! therefore for us, if index == 5 problem?"
 
 }
-
 
 /*********************************************************************
 *  pointer subterfuge hack from the quiz question 8
@@ -194,6 +206,14 @@ void testAnsiUnicode(){};
 
 
 
+/*********************************************************************
+*  ArrayIndex hack  from the book, page 137
+*  Called by interact()
+*********************************************************************/
+void testArrayIndex() 
+{
+
+}
 
 
 /*********************************************************************

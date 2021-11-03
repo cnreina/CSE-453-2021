@@ -45,6 +45,7 @@ void testHeapSpraying();
 void testIntegerOverflow();
 void testAnsiUnicode();
 
+
 /*********************************************************************
 *  vtable for my vtable smash, thank me boys, 
 * the original name for the struct was: 

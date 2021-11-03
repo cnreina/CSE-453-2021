@@ -33,15 +33,6 @@ void testHeapSpraying();
 void testIntegerOverflow();
 void testAnsiUnicode();
 
-/**********************************************
- * MAIN : 
- **********************************************/
-int main()
-{
-    interact ();
-    return 0;
-}
-
 /*********************************************************************
 *  vtable for my vtable smash, thank me boys, 
 * the original name for the struct was: 
@@ -72,6 +63,14 @@ void VulnerableVTable::malignant()
 
 }
 
+/**********************************************
+ * MAIN : 
+ **********************************************/
+int main()
+{
+    interact ();
+    return 0;
+}
 
 /*********************************************************************
 *  ArrayIndex hack  from the book, page 137

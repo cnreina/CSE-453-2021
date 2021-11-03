@@ -17,16 +17,135 @@
 #include <string>
 using namespace std;
 
-
-void testArrayIndex() {};
-void testPointerSubterfuge() {};
-void testArcInjection() {};
-void testVTableSpraying() {};
-void testStackSmashing() {};
+void testArrayIndex();
+void testPointerSubterfuge();
+void testArcInjection();
+void testVTableSpraying();
+void testStackSmashing();
 void testHeapSpraying() {};
 void testIntegerOverflow() {};
 void testAnsiUnicode() {};
 
+
+/*********************************************************************
+*  vtable for my vtable smash, thank me boys, 
+* the original name for the struct was: 
+* "VerilyEvincedVisibleAndEvidentVulnerableVtable"
+*********************************************************************/
+struct VulnerableVTable
+{
+    /*in the quiz question 5 there is a public:
+    word above the single variable and 2 virtual functions*/
+    char myText[256];
+    virtual void naive();
+    {
+
+        cin >> myText;
+
+    }
+
+    virtual void malignant();
+
+};
+
+void VulnerableVTable::naive()
+{
+}
+
+void VulnerableVTable::malignant()
+{
+
+}
+
+
+/*********************************************************************
+*  ArrayIndex hack  from the book, page 137
+*  Called by interact()
+*********************************************************************/
+void testArrayIndex() 
+{
+
+    int sheepArray[5];  // a vulnerable soft meek array like a sheep
+    bool crappyAuthenticationThatMakesThingsWorse = false;  // I guess to do array index, we have to have a check that actually makes the array vulnerable rather than safe?
+
+    int gimmieIndex;
+    cin >> gimmieIndex;
+    array[gimmieIndex] = -1;  //book says "if index == 4, problem! therefore for us, if index == 5 problem?"
+
+}
+
+
+/*********************************************************************
+*  pointer subterfuge hack from the quiz question 8
+*  Called by interact()
+*********************************************************************/
+void testPointerSubterfuge()
+{
+
+    char myArray[7];  // quiz question 8 has array[8] i did 7 so we aren't "copying"
+    char * secret = "arglefraster";
+    char * public = "princess cimorene";
+    cin.getline(input, 19);      
+
+    /*for above, the quiz question 8 makes the number i have "19" bigger than the size of "Citizen Kane",
+    which is 12 charand getline is 17, so my "princess cimorene" is 17 so i made the 17 in getline into a 19*/
+
+    cout << public << endl;
+
+}
+
+/*********************************************************************
+*  ARC injection hack zoh my gato! we blow up iron man's cold fusion reactor! from the book, page 141
+*  Called by interact()
+*********************************************************************/
+void testArcInjection()
+{
+
+    long myVulnerableBuffer[8];
+    void (*myPointerMethod)() = naive;
+
+    cin >> myVulnerableBuffer[8];  
+    
+    /*pretty sure above we expose the buffer, 
+    and therefore the pointer and method it executes, naked, cold, and afraid
+    to the depraved wiles of every nefarious, skulldugerous, and malcisously nasty hacker with their pointy teeth and hairy hands with claws scraped with grit in their fingernails!*/
+
+    myPointerMethod();
+
+}
+
+/*********************************************************************
+*  vtable smash  
+*  Called by interact()
+*********************************************************************/
+void testVTableSpraying() 
+{
+
+    VulnerableVTable myVtable;
+
+    myVtable.naive();  
+    
+    /*above, my understanding is, once we give access to the pointer 
+    or buffer of a vtable, we have let the crazies control the 
+    madhouse*/
+
+}
+
+/*********************************************************************
+*  stack smash from the sounds of it, this is the bread and butter
+*  of all hackers, seems pretty simple to actually build 
+*  vulnerable code for this too, just let a string, array, or buffer 
+*  be exposed naked to input.
+*  Called by interact()
+*********************************************************************/
+void testStackSmashing()
+{
+
+    char vulnerableText[256];
+    cin >> vulnerableText;
+
+
+}
 
 /*********************************************************************
 *  clearScreen()
@@ -223,3 +342,5 @@ int main()
 
     return 0;
 }
+
+

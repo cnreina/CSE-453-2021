@@ -84,7 +84,7 @@ void testArrayIndex()
 
     int gimmieIndex;
     cin >> gimmieIndex;
-    array[gimmieIndex] = -1;  //book says "if index == 4, problem! therefore for us, if index == 5 problem?"
+    sheepArray[gimmieIndex] = -1;  //book says "if index == 4, problem! therefore for us, if index == 5 problem?"
 
 }
 

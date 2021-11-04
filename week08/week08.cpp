@@ -46,8 +46,10 @@ void arrayWorking();
 void arrayExploit();
 void arcWorking();
 void arcExploit();
+void pointerWorking();
+void pointerExploit();
 void stackWorking();
-
+void stackExploit();
 
 void testArrayIndex();
 void testPointerSubterfuge();
@@ -87,7 +89,8 @@ class Vulnerability
 }
 
 /*********************************************************************
-*  
+*  VTable Spraying
+*  Derived class
 *********************************************************************/
 class VulnerabilityDerived : public Vulnerability
 {
@@ -201,7 +204,9 @@ void arcVulnerability(long myVulnerableBuffer)
     
     /*pretty sure above we expose the buffer, 
     and therefore the pointer and method it executes, naked, cold, and afraid
-    to the depraved wiles of every nefarious, skulldugerous, and malcisously nasty hacker with their pointy teeth and hairy hands with claws scraped with grit in their fingernails!*/
+    to the depraved wiles of every nefarious, skulldugerous, and malcisously 
+    nasty hacker with their pointy teeth and hairy hands with claws scraped 
+    with grit in their fingernails!*/
 
     myPointerMethod();
 }
@@ -214,6 +219,8 @@ void arcVulnerability(long myVulnerableBuffer)
 void arcWorking()
 {
 
+    // needs guts
+
 }
 
 /*********************************************************************
@@ -223,6 +230,8 @@ void arcWorking()
 *********************************************************************/
 void arcExploit()
 {
+
+    // needs guts
 
 }
 
@@ -240,6 +249,19 @@ void pointerSubterfugeVulnerability(char myArray, char *secretPointer, char *pub
     which is 12 charand getline is 17, so my "princess cimorene" is 17 so i made the 17 in getline into a 19*/
 
     cout << *publicPointer << endl;
+
+}
+
+void pointerWorking()
+{
+
+
+}
+
+void pointerExploit()
+{
+
+
 
 }
 

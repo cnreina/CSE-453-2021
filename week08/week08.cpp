@@ -72,8 +72,7 @@ void VulnerableVTable::naive()
 }
 
 void VulnerableVTable::malignant()
-{
-
+{ 
 }
 
 /**********************************************
@@ -85,24 +84,39 @@ int main()
     return 0;
 }
 
-
+/*********************************************************************
+*  ARRAY INDEX
+*********************************************************************/
 
 /*********************************************************************
 *  ArrayIndex hack  from the book, page 137
 *  Called by interact()
 *  
-*  is vulnerable to an ARC injection attack
-*  list all the requirements for ARC injection and make sure that your
-*  vulnerability function exhibits them all
+*
 *********************************************************************/
-void arrayVulnerability() 
+void arrayVulnerability(int gimmieIndex) 
 {
     int sheepArray[5];  // a vulnerable soft meek array like a sheep
     bool crappyAuthenticationThatMakesThingsWorse = false;  // I guess to do array index, we have to have a check that actually makes the array vulnerable rather than safe?
 
-    int gimmieIndex;
-    cin >> gimmieIndex;
+    //int gimmieIndex;
+    //cin >> gimmieIndex;
     array[gimmieIndex] = -1;  //book says "if index == 4, problem! therefore for us, if index == 5 problem?"
+
+}
+
+
+/*********************************************************************
+*  ARC INJECTION
+*********************************************************************/
+
+/*********************************************************************
+*  is vulnerable to an ARC injection attack
+*  list all the requirements for ARC injection and make sure that your
+*  vulnerability function exhibits them all
+*********************************************************************/
+void arcVulnerability()
+{
 
 }
 
@@ -135,13 +149,13 @@ void arcExploit()
 *  ARC injection hack zoh my gato! we blow up iron man's cold fusion reactor! from the book, page 141
 *  Called by interact()
 *********************************************************************/
-void testArcInjection()
+void arcInjectionVulnerability(long myVulnerableBuffer)
 {
 
-    long myVulnerableBuffer[8];
+    //long myVulnerableBuffer[8];
     void (*myPointerMethod)() = naive;
 
-    cin >> myVulnerableBuffer[8];  
+    //cin >> myVulnerableBuffer[8];  
     
     /*pretty sure above we expose the buffer, 
     and therefore the pointer and method it executes, naked, cold, and afraid
@@ -155,7 +169,7 @@ void testArcInjection()
 *  pointer subterfuge hack from the quiz question 8
 *  Called by interact()
 *********************************************************************/
-void testPointerSubterfuge()
+void pointerSubterfugeVulnerability()
 {
 
     char myArray[7];  // quiz question 8 has array[8] i did 7 so we aren't "copying"
@@ -226,7 +240,6 @@ void testAnsiUnicode(){};
 
 
 
-
 /*********************************************************************
 *  ArrayIndex hack  from the book, page 137
 *  Called by interact()
@@ -234,8 +247,27 @@ void testAnsiUnicode(){};
 void testArrayIndex() 
 {
 
+    int gimmieIndex;
+
+    arrayVulnerability(gimmieIndex);
+
 }
 
+void testPointerSubterfuge()
+{
+
+    pointerSubterfugeVulnerability();  // needs parameter.
+
+}
+
+void testArcInjection()
+{
+    
+    long myVulnerableBuffer;
+    
+    arcInjectionVulnerability(myVulnerableBuffer)
+
+}
 
 /*********************************************************************
 *  clearScreen()

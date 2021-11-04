@@ -36,6 +36,18 @@ void displayMenu();
 void displayHeader();
 void clearScreen();
 
+void arrayVulnerability(int gimmieIndex);
+void arcVulnerability(long myVulnerableBuffer);
+void pointerSubterfugeVulnerability(char myArray, char *secretPointer, char *publicPointer);
+void VTableSprayingVulnerability(struct myVtable);
+void stackVulnerability(char vulnerableText);
+
+void arrayWorking();
+void arrayExploit();
+void arcWorking();
+void arcExploit();
+
+
 void testArrayIndex();
 void testPointerSubterfuge();
 void testArcInjection();
@@ -45,6 +57,39 @@ void testHeapSpraying();
 void testIntegerOverflow();
 void testAnsiUnicode();
 
+/*********************************************************************
+*  VTable Spraying
+*  class vulnerable to vtable smashing attack.
+*  there must be a method or two in this class that is vulnerable.
+*  Hint: You will need two classes to do this: a base class and a derived class.
+*  Hint: For extra credit, can you demonstrate VTable Smashing?
+*********************************************************************/
+class Vulnerability
+{
+    /*
+    instantiates a Vulnerability object and calls the vulnerable method.
+    this method will behave normally because malicious input is not passed.
+    Provides output from this function. 
+    */
+    void vtableWorking(){};
+    
+    /*
+    demonstrates vtable spraying.
+    In other words, it is not necessary to demonstrate vtable smashing, but 
+    rather just spraying.
+    Provides output from this function. 
+    */
+    void vtableExploit(){};
+    
+}
+
+/*********************************************************************
+*  
+*********************************************************************/
+class VulnerabilityDerived : public Vulnerability
+{
+    
+}
 
 /*********************************************************************
 *  vtable for my vtable smash, thank me boys, 
@@ -90,14 +135,15 @@ int main()
 
 /*********************************************************************
 *  ArrayIndex hack  from the book, page 137
-*  Called by interact()
-*  
-*
+*  ARRAY VULNERABILTY
+*   1. There must be an array and an array index variable
+*   2. The array index variable must be reachable through external input.
+*   3. There must not be bounds checking on the array index variable.
 *********************************************************************/
 void arrayVulnerability(int gimmieIndex) 
 {
-    int sheepArray[5];  // a vulnerable soft meek array like a sheep
-    bool crappyAuthenticationThatMakesThingsWorse = false;  // I guess to do array index, we have to have a check that actually makes the array vulnerable rather than safe?
+    int sheepArray[] = {1,2,3,4,5};  // a vulnerable soft meek array like a sheep
+    cout << "Array Value: " << sheepArray[gimmieIndex] << endl;  // I guess to do array index, we have to have a check that actually makes the array vulnerable rather than safe?
 
     //int gimmieIndex;
     //cin >> gimmieIndex;
@@ -105,53 +151,46 @@ void arrayVulnerability(int gimmieIndex)
 
 }
 
+/*********************************************************************
+* ARRAY WORKING
+* Call arrayVulnerability() in a way that does
+* not yield unexpected behavior
+* 
+*********************************************************************/
+void arrayWorking()
+{
+    // Pass in valid value to the array vulnerability 
+    arrayVulnerability(4);
+}
+
+/*********************************************************************
+* ARRAY EXPLOIT
+ * 1. The attacker provides an array index value outside the expected range
+ * 2. The attacker must be able to provide input or redirect
+ *    existing input into the array at the index he provided
+ * 3. The injected value must alter program state in a way
+ *    that is desirable to the attacker
+*********************************************************************/
+void arrayExploit()
+{
+    // Pass in an invalid value to exploit the array.
+    arrayVulnerability(7);
+    
+}
 
 /*********************************************************************
 *  ARC INJECTION
 *********************************************************************/
 
 /*********************************************************************
-*  is vulnerable to an ARC injection attack
-*  list all the requirements for ARC injection and make sure that your
-*  vulnerability function exhibits them all
+*  1 There must be a function pointer used in the code.
+*  2 Through some vulnerability, there must be a way for user input to
+*    overwrite the function pointer. This typically happens through a 
+*    stack buffer vulnerability.
+*  3 After the memory is overwritten, the function pointer must be dereferenced.
 *********************************************************************/
-void arcVulnerability()
+void arcVulnerability(long myVulnerableBuffer)
 {
-
-}
-
-/*********************************************************************
-*  calls arrayVulnerability
-calls arcVulnerability() with non-malicious input. As with arrayWorking(), 
-the expectation is that the vulnerability function will behave normally. 
-Provide output from this function.
-*********************************************************************/
-void arcWorking()
-{
-
-}
-
-/*********************************************************************
-*  calls arrayVulnerability
-calls arcVulnerability(). As with the array index exploit, list all 
-the requirements for exploiting ARC injection and make sure that your 
-expoit function exhibits them all. 
-Provide output from this function.
-*********************************************************************/
-void arcExploit()
-{
-
-}
-
-
-
-/*********************************************************************
-*  ARC injection hack zoh my gato! we blow up iron man's cold fusion reactor! from the book, page 141
-*  Called by interact()
-*********************************************************************/
-void arcInjectionVulnerability(long myVulnerableBuffer)
-{
-
     //long myVulnerableBuffer[8];
     void (*myPointerMethod)() = naive;
 
@@ -162,25 +201,42 @@ void arcInjectionVulnerability(long myVulnerableBuffer)
     to the depraved wiles of every nefarious, skulldugerous, and malcisously nasty hacker with their pointy teeth and hairy hands with claws scraped with grit in their fingernails!*/
 
     myPointerMethod();
+}
+
+/*********************************************************************
+*  calls arcVulnerability() with non-malicious input.
+*  the vulnerability function will behave normally. 
+*  Provides output from this function.
+*********************************************************************/
+void arcWorking()
+{
 
 }
+
+/*********************************************************************
+*  calls arcVulnerability().
+*  exploits ARC injection. 
+*  Provide output from this function.
+*********************************************************************/
+void arcExploit()
+{
+
+}
+
 
 /*********************************************************************
 *  pointer subterfuge hack from the quiz question 8
 *  Called by interact()
 *********************************************************************/
-void pointerSubterfugeVulnerability()
+void pointerSubterfugeVulnerability(char myArray, char *secretPointer, char *publicPointer)
 {
 
-    char myArray[7];  // quiz question 8 has array[8] i did 7 so we aren't "copying"
-    char * secret = "arglefraster";
-    char * public = "princess cimorene";
-    cin.getline(input, 19);      
+    // quiz question 8 has array[8] i did 7 so we aren't "copying"     
 
     /*for above, the quiz question 8 makes the number i have "19" bigger than the size of "Citizen Kane",
     which is 12 charand getline is 17, so my "princess cimorene" is 17 so i made the 17 in getline into a 19*/
 
-    cout << public << endl;
+    cout << *publicPointer << endl;
 
 }
 
@@ -188,13 +244,11 @@ void pointerSubterfugeVulnerability()
 *  vtable smash  
 *  Called by interact()
 *********************************************************************/
-void testVTableSpraying() 
+void VTableSprayingVulnerability(struct myVtable) 
 {
-
-    VulnerableVTable myVtable;
-
-    myVtable.naive();  
     
+    myVtable.naive();  
+
     /*above, my understanding is, once we give access to the pointer 
     or buffer of a vtable, we have let the crazies control the 
     madhouse*/
@@ -208,14 +262,32 @@ void testVTableSpraying()
 *  be exposed naked to input.
 *  Called by interact()
 *********************************************************************/
-void testStackSmashing()
+void stackVulnerability(char vulnerableText)
 {
-
-    char vulnerableText[256];
-    cin >> vulnerableText;
-
+    
+    cout << "text value : " << vulnerableText << endl;
+    
+    // I don't know what to write here, we overwrite the buffer when we do a Cin and Cin is in "testStackSmashing"
+    
+    char 
 
 }
+
+void stackWorking()
+{
+    // Valid input that will output correctly 
+    stackVulnerability(["h","e","l","l","o"])
+    
+
+};
+
+void stackExploit()
+{
+    // Invalid input that will exploit the buffer
+    
+    stackVulnerability([])
+
+};
 
 
 void testHeapSpraying(){};
@@ -236,21 +308,19 @@ void testAnsiUnicode(){};
 
 
 
-
-
-
+/*********************************************************************
+* TESTS
+*********************************************************************/
 
 /*********************************************************************
 *  ArrayIndex hack  from the book, page 137
 *  Called by interact()
 *********************************************************************/
 void testArrayIndex() 
-{
-
-    int gimmieIndex;
-
-    arrayVulnerability(gimmieIndex);
-
+{    
+    // Test the array index.
+    arrayWorking();
+    arrayExploit();
 }
 
 void testPointerSubterfuge()
@@ -265,7 +335,38 @@ void testArcInjection()
     
     long myVulnerableBuffer;
     
-    arcInjectionVulnerability(myVulnerableBuffer)
+    arcVulnerability(myVulnerableBuffer)
+
+}
+
+void testStackSmashing()
+{
+    // Test the Stack.
+    stackWorking();
+    stackExploit();
+}
+
+void testPointerSubterfuge()
+{
+
+    char myArray[7];  // quiz question 8 has array[8] i did 7 so we aren't "copying"
+    char * secretPointer = "arglefraster";
+    char * publicPointer = "princess cimorene";
+
+    pointerSubterfugeVulnerability(myArray, secretPointer, publicPointer);
+    
+}
+
+void testVTableSpraying()
+{
+
+    VulnerableVTable myVtable;
+
+    /*above, my understanding is, once we give access to the pointer 
+    or buffer of a vtable, we have let the crazies control the 
+    madhouse*/
+
+    VTableSprayingVulnerability(myVtable)
 
 }
 

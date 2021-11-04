@@ -218,26 +218,148 @@ void testStackSmashing()
 }
 
 
-void testHeapSpraying(){};
-void testIntegerOverflow(){};
-void testAnsiUnicode(){};
+/**************************
+ * HeapSpraying 
+ **************************/
+void heapVulnerability(string input) {
+    char* buffer1 = new char[5]; // requires two buffers on the heap
+    char* buffer2 = new char[5];
+
+    assert(buffer1 < buffer2); // buffer 1 must be before buffer 2!
+    
+    int i = 0;
+    try {
+        // Copy input to buffer1
+        for (string::iterator it = input.begin(); it != input.end(); ++it)
+        {
+            buffer1[i++] = *it;
+        }
+
+        // Delete buffers
+        delete[] buffer2; // need to delete second buffer first
+        delete[] buffer1;
+    }
+    
+    catch (exception ex) {
+        cout << "Congradulations, your heap has crashed. Please have a good one!" << endl;
+    }
+
+    return;
+};
+
+void heapWorking() {
+    cout << "Testing heap with string 'Test'.";
+    heapVulnerability("Test");
+    cout << "Test worked.";
+};
+
+void heapExploit() {
+    cout << "Testing heap with string 'This is too long!'\n";
+    heapVulnerability("This is too long!");
+    cout << "If this prints, the program didn't crash. It's a miracle!\n";
+};
+
+void testHeapSpraying() {
+    cout << "HeapSpraying\n"
+        << "\tWorking\n\n";
+
+    heapWorking();
+
+    cout << "\tExploit\n\n";
+
+    heapExploit();
+};
+
+/**************************
+ * Integer Overflow
+ **************************/
+void intVulnerability(int offset) {
+    char buffer[256];
+    char* sentinel = buffer + 256;
+
+    if (offset + buffer < sentinel)
+        cout << "Congradulations, you're safe!";
+    else
+        cout << "Congradulations, you've exploited this program!" << endl;
+    return;
+
+};
+
+void intWorking() {
+    int n = 255;
+    intVulnerability(n);
+};
+
+void intExploit()
+{
+    int n = 256;
+    intVulnerability(n);
+
+};
+
+void testIntegerOverflow() {
+    cout << "HeapSpraying\n"
+        << "\tWorking\n\n";
+
+    intWorking();
+
+    cout << "\n\n\tExploit\n\n";
+
+    intExploit();
+    cout << "\n\n";
+};
 
 
+/**************************
+ * ANSI-Unicode Conversion
+ **************************/
 
+void ansiVulnerability(short unicodeText1[256]) {
+        
+    short unicodeText2[256];
+    
+    cout << sizeof(unicodeText1) << endl;
+    
+    // Copy unicodeText1 to unicodeText2
+    for (int i = 0; i < sizeof(unicodeText1); i++) 
+    {
+        unicodeText2[i] = unicodeText1[i];
+        cout << '[' << (char) unicodeText1 << ', ' << (char) unicodeText2 << ']' << endl;
+    }
 
+    cout << "Message:" << endl;
+    for (int i = 0; i < 256; i++) 
+    {
+        if (unicodeText2[i] >= 'A' && unicodeText2[i] <= 'z')
+            cout << (char) unicodeText2[i];
+    }
 
+    cout << endl;
+    
+}
 
+void ansiWorking()
+{
+    short message[256] = {'H', 'E', 'L', 'L', 'O', 'S'};
+    ansiVulnerability(message);
+}
 
+void ansiExploit()
+{
 
+}
 
+void testAnsiUnicode() 
+{
+    cout << "ANSI-Unicode Conversion\n"
+         << "\tWorking\n\n";
 
+    ansiWorking();
 
+    cout << "\tExploit\n\n";
 
-
-
-
-
-
+    ansiExploit();
+};
 
 
 /*********************************************************************

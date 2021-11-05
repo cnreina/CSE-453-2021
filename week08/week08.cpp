@@ -31,14 +31,14 @@
 using namespace std;
 
 void interact();
-void displayResult(std::string message);
+void displayResult(string message);
 void displayAboutUs();
 void displayMenu();
 void displayHeader();
 void clearScreen();
 
 void arrayVulnerability(int gimmieIndex);
-void arcVulnerability(long myVulnerableBuffer);
+void arcVulnerability(void (*functionPointer)(string), string userInput);
 void pointerSubterfugeVulnerability(char myArray, char *secretPointer, char *publicPointer);
 void VTableSprayingVulnerability(struct myVtable);
 void stackVulnerability(char vulnerableText);
@@ -183,55 +183,57 @@ void arrayExploit()
 };
 
 /*********************************************************************
-*  ARC INJECTION
+ * ARC INJECTION
+ *  1 There must be a function pointer used in the code.
+ *  2 Through some vulnerability, there must be a way for user input to
+ *    overwrite the function pointer. This typically happens through a 
+ *    stack buffer vulnerability.
+ *  3 After the memory is overwritten, the function pointer must be dereferenced.
+ * 
+ * Overwriting a function pointer so, when it is dereferenced, a
+ * different function from the intended one gets executed.
 *********************************************************************/
-
-/*********************************************************************
-*  1 There must be a function pointer used in the code.
-*  2 Through some vulnerability, there must be a way for user input to
-*    overwrite the function pointer. This typically happens through a 
-*    stack buffer vulnerability.
-*  3 After the memory is overwritten, the function pointer must be dereferenced.
-*********************************************************************/
-void arcVulnerability(long myVulnerableBuffer)
+void arcVulnerability(void (*functionPointer)(string), string userInput)
 {
-    //long myVulnerableBuffer[8];
-    //void (*myPointerMethod)() = &VulnerableVTable::naive();
-
-    //cin >> myVulnerableBuffer[8];  
-    
-    /*pretty sure above we expose the buffer, 
-    and therefore the pointer and method it executes, naked, cold, and afraid
-    to the depraved wiles of every nefarious, skulldugerous, and malcisously 
-    nasty hacker with their pointy teeth and hairy hands with claws scraped 
-    with grit in their fingernails!*/
-
-    myPointerMethod();
+    string message = userInput;
+    functionPointer(message);
 };
 
 /*********************************************************************
-*  calls arcVulnerability() with non-malicious input.
-*  the vulnerability function will behave normally. 
-*  Provides output from this function.
+ *  calls arcVulnerability() with non-malicious input.
+ *  the vulnerability function will behave normally. 
+ *  Provides output from this function.
 *********************************************************************/
 void arcWorking()
 {
-
-    // needs guts
-
+    void (*functionPointer)(string);
+    functionPointer = &displayResult;
+    arcVulnerability(functionPointer, "hello");
 };
 
 /*********************************************************************
-*  calls arcVulnerability().
-*  exploits ARC injection. 
-*  Provide output from this function.
+ * EXPLOIT ARC INJECTION
+ *  calls arcVulnerability().
+ *  exploits ARC injection. 
+ *  Provide output from this function.
 *********************************************************************/
 void arcExploit()
 {
-
     // needs guts
+};
+
+/*********************************************************************
+ * TEST ARC INJECTION
+ *  1 Calls arcWorking()
+ *  2 Calls arcExploit()
+*********************************************************************/
+void testArcInjection()
+{
+    arcWorking();
+    arcExploit();
 
 };
+
 
 
 /*********************************************************************
@@ -474,14 +476,7 @@ void testArrayIndex()
     arrayExploit();
 };
 
-void testArcInjection()
-{
-    
-    long myVulnerableBuffer;
-    
-    arcVulnerability(myVulnerableBuffer);
 
-};
 
 void testStackSmashing()
 {
@@ -493,11 +488,11 @@ void testStackSmashing()
 void testPointerSubterfuge()
 {
 
-    char myArray[7];  // quiz question 8 has array[8] i did 7 so we aren't "copying"
-    char * secretPointer = "arglefraster";
-    char * publicPointer = "princess cimorene";
+    // char myArray[7];  // quiz question 8 has array[8] i did 7 so we aren't "copying"
+    // char * secretPointer = "arglefraster";
+    // char * publicPointer = "princess cimorene";
 
-    pointerSubterfugeVulnerability(*myArray, secretPointer, publicPointer);
+    // pointerSubterfugeVulnerability(*myArray, secretPointer, publicPointer);
     
 };
 
@@ -582,9 +577,9 @@ void displayAboutUs()
 *  Called by interact()
 *  Displays results.
 *********************************************************************/
-void displayResult(std::string message)
+void displayResult(string message)
 {
-    std::cout << message << "\n\n";
+    cout << message << "\n\n";
     return;
 };
 

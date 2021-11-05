@@ -377,9 +377,9 @@ void intVulnerability(int offset) {
     char* sentinel = buffer + 256;
 
     if (offset + buffer < sentinel)
-        cout << "Congratulations, you're safe!";
+        cout << "Security check passed! :)";
     else
-        cout << "Congratulations, you've exploited this program!" << endl;
+        cout << "Security check failed. :(" << endl;
     return;
 
 };
@@ -387,13 +387,15 @@ void intVulnerability(int offset) {
 void intWorking()
 {
     int n = 255;
+    cout << "Offset: " << n << endl;
     intVulnerability(n);
 };
 
 void intExploit()
 {
-    int n = 30000000000000000000000;
-    intVulnerability(n);
+    long n = 3000000000000000;
+    cout << "Offset: " << n << endl;
+    intVulnerability((int) n);
 
 };
 

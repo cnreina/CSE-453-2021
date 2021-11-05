@@ -401,7 +401,7 @@ void intExploit()
 
 void testIntegerOverflow()
 {
-    cout << "HeapSpraying\n"
+    cout << "Integer Overflow\n"
         << "\tWorking\n\n";
 
     intWorking();

@@ -60,6 +60,8 @@ void testHeapSpraying();
 void testIntegerOverflow();
 void testAnsiUnicode();
 
+void myPointerMethod();
+
 
 /*********************************************************************
 *  VTable Spraying
@@ -86,7 +88,7 @@ class Vulnerability
     */
     void vtableExploit(){};
     
-}
+};
 
 /*********************************************************************
 *  VTable Spraying
@@ -95,7 +97,7 @@ class Vulnerability
 class VulnerabilityDerived : public Vulnerability
 {
     
-}
+};
 
 /*********************************************************************
 *  vtable for my vtable smash, thank me boys, 
@@ -108,23 +110,17 @@ struct VulnerableVTable
     word above the single variable and 2 virtual functions*/
     char myText[256];
     virtual void naive();
-    {
-
-        cin >> myText;
-
-    }
-
     virtual void malignant();
 
 };
 
 void VulnerableVTable::naive()
 {
-}
+};
 
 void VulnerableVTable::malignant()
 { 
-}
+};
 
 /**********************************************
  * MAIN : 
@@ -133,18 +129,19 @@ int main()
 {
     interact ();
     return 0;
-}
+};
 
 /*********************************************************************
 *  ARRAY INDEX
 *********************************************************************/
 
 /*********************************************************************
-*  ArrayIndex hack  from the book, page 137
 *  ARRAY VULNERABILTY
 *   1. There must be an array and an array index variable
 *   2. The array index variable must be reachable through external input.
 *   3. There must not be bounds checking on the array index variable.
+*
+*  See page 137
 *********************************************************************/
 void arrayVulnerability(int gimmieIndex) 
 {
@@ -153,9 +150,9 @@ void arrayVulnerability(int gimmieIndex)
 
     //int gimmieIndex;
     //cin >> gimmieIndex;
-    array[gimmieIndex] = -1;  //book says "if index == 4, problem! therefore for us, if index == 5 problem?"
+    sheepArray[gimmieIndex] = -1;  //book says "if index == 4, problem! therefore for us, if index == 5 problem?"
 
-}
+};
 
 /*********************************************************************
 * ARRAY WORKING
@@ -167,7 +164,7 @@ void arrayWorking()
 {
     // Pass in valid value to the array vulnerability 
     arrayVulnerability(4);
-}
+};
 
 /*********************************************************************
 * ARRAY EXPLOIT
@@ -182,7 +179,7 @@ void arrayExploit()
     // Pass in an invalid value to exploit the array.
     arrayVulnerability(7);
     
-}
+};
 
 /*********************************************************************
 *  ARC INJECTION
@@ -198,7 +195,7 @@ void arrayExploit()
 void arcVulnerability(long myVulnerableBuffer)
 {
     //long myVulnerableBuffer[8];
-    void (*myPointerMethod)() = naive;
+    //void (*myPointerMethod)() = &VulnerableVTable::naive();
 
     //cin >> myVulnerableBuffer[8];  
     
@@ -209,7 +206,7 @@ void arcVulnerability(long myVulnerableBuffer)
     with grit in their fingernails!*/
 
     myPointerMethod();
-}
+};
 
 /*********************************************************************
 *  calls arcVulnerability() with non-malicious input.
@@ -221,7 +218,7 @@ void arcWorking()
 
     // needs guts
 
-}
+};
 
 /*********************************************************************
 *  calls arcVulnerability().
@@ -233,7 +230,7 @@ void arcExploit()
 
     // needs guts
 
-}
+};
 
 
 /*********************************************************************
@@ -250,35 +247,32 @@ void pointerSubterfugeVulnerability(char myArray, char *secretPointer, char *pub
 
     cout << *publicPointer << endl;
 
-}
+};
 
 void pointerWorking()
 {
 
-
-}
+};
 
 void pointerExploit()
 {
 
-
-
-}
+};
 
 /*********************************************************************
 *  vtable smash  
 *  Called by interact()
 *********************************************************************/
-void VTableSprayingVulnerability(struct myVtable) 
+void VTableSprayingVulnerability(struct VulnerableVTable) 
 {
     
-    myVtable.naive();  
+    //VulnerableVTable::naive();  
 
     /*above, my understanding is, once we give access to the pointer 
     or buffer of a vtable, we have let the crazies control the 
     madhouse*/
 
-}
+};
 
 /*********************************************************************
 *  stack smash from the sounds of it, this is the bread and butter
@@ -293,24 +287,27 @@ void stackVulnerability(char vulnerableText)
     cout << "text value : " << vulnerableText << endl;
     
     // I don't know what to write here, we overwrite the buffer when we do a Cin and Cin is in "testStackSmashing"
-    
-    char 
 
-}
+};
 
 void stackWorking()
 {
-    // Valid input that will output correctly 
-    stackVulnerability(["h","e","l","l","o"])
-    
+    // Valid input that will output correctly
+    char* buffer1 = new char[5];
+    buffer1[0] = 'h';
+    buffer1[1] = 'e';
+    buffer1[2] = 'l';
+    buffer1[3] = 'l';
+    buffer1[4] = 'o';
+    stackVulnerability(*buffer1);
 
 };
 
 void stackExploit()
 {
     // Invalid input that will exploit the buffer
-    
-    stackVulnerability([])
+    char* buffer1 = new char[5];
+    stackVulnerability(*buffer1);
 
 };
 
@@ -318,7 +315,8 @@ void stackExploit()
 /**************************
  * HeapSpraying 
  **************************/
-void heapVulnerability(string input) {
+void heapVulnerability(string input)
+{
     char* buffer1 = new char[5]; // requires two buffers on the heap
     char* buffer2 = new char[5];
 
@@ -344,19 +342,22 @@ void heapVulnerability(string input) {
     return;
 };
 
-void heapWorking() {
+void heapWorking()
+{
     cout << "Testing heap with string 'Test'.";
     heapVulnerability("Test");
     cout << "Test worked.";
 };
 
-void heapExploit() {
+void heapExploit()
+{
     cout << "Testing heap with string 'This is too long!'\n";
     heapVulnerability("This is too long!");
     cout << "If this prints, the program didn't crash. It's a miracle!\n";
 };
 
-void testHeapSpraying() {
+void testHeapSpraying()
+{
     cout << "HeapSpraying\n"
         << "\tWorking\n\n";
 
@@ -382,7 +383,8 @@ void intVulnerability(int offset) {
 
 };
 
-void intWorking() {
+void intWorking()
+{
     int n = 255;
     intVulnerability(n);
 };
@@ -394,7 +396,8 @@ void intExploit()
 
 };
 
-void testIntegerOverflow() {
+void testIntegerOverflow()
+{
     cout << "HeapSpraying\n"
         << "\tWorking\n\n";
 
@@ -411,7 +414,8 @@ void testIntegerOverflow() {
  * ANSI-Unicode Conversion
  **************************/
 
-void ansiVulnerability(short unicodeText1[256]) {
+void ansiVulnerability(short unicodeText1[256])
+{
         
     short unicodeText2[256];
     
@@ -433,18 +437,18 @@ void ansiVulnerability(short unicodeText1[256]) {
 
     cout << endl;
     
-}
+};
 
 void ansiWorking()
 {
     short message[256] = {'H', 'E', 'L', 'L', 'O', 'S'};
     ansiVulnerability(message);
-}
+};
 
 void ansiExploit()
 {
 
-}
+};
 
 void testAnsiUnicode() 
 {
@@ -458,7 +462,6 @@ void testAnsiUnicode()
     ansiExploit();
 };
 
-
 /*********************************************************************
 *  ArrayIndex hack  from the book, page 137
 *  Called by interact()
@@ -468,30 +471,23 @@ void testArrayIndex()
     // Test the array index.
     arrayWorking();
     arrayExploit();
-}
-
-void testPointerSubterfuge()
-{
-
-    pointerSubterfugeVulnerability();  // needs parameter.
-
-}
+};
 
 void testArcInjection()
 {
     
     long myVulnerableBuffer;
     
-    arcVulnerability(myVulnerableBuffer)
+    arcVulnerability(myVulnerableBuffer);
 
-}
+};
 
 void testStackSmashing()
 {
     // Test the Stack.
     stackWorking();
     stackExploit();
-}
+};
 
 void testPointerSubterfuge()
 {
@@ -500,9 +496,9 @@ void testPointerSubterfuge()
     char * secretPointer = "arglefraster";
     char * publicPointer = "princess cimorene";
 
-    pointerSubterfugeVulnerability(myArray, secretPointer, publicPointer);
+    pointerSubterfugeVulnerability(*myArray, secretPointer, publicPointer);
     
-}
+};
 
 void testVTableSpraying()
 {
@@ -513,9 +509,9 @@ void testVTableSpraying()
     or buffer of a vtable, we have let the crazies control the 
     madhouse*/
 
-    VTableSprayingVulnerability(myVtable)
+    VTableSprayingVulnerability(myVtable);
 
-}
+};
 
 /*********************************************************************
 *  clearScreen()
@@ -526,7 +522,7 @@ void clearScreen()
 {
     if (system("CLS")) { system("clear"); }
     return;
-}
+};
 
 /*********************************************************************
 *  displayHeader()
@@ -537,7 +533,7 @@ void displayHeader()
 {
     cout << "\n************ CSE 453 ************\n\n";
     return;
-}
+};
 
 /*********************************************************************
 *  displayMenu()
@@ -559,7 +555,7 @@ void displayMenu()
         << "   Q  Quit\n\n";
 
     return;
-}
+};
 
 /*********************************************************************
 *  displayAboutUs()
@@ -578,7 +574,7 @@ void displayAboutUs()
         << "   Stephen Ellis\n\n";
 
     return;
-}
+};
 
 /*********************************************************************
 *  displayResult()
@@ -589,7 +585,7 @@ void displayResult(std::string message)
 {
     std::cout << message << "\n\n";
     return;
-}
+};
 
 /*********************************************************************
 *   interact(), until user types "Q".
@@ -700,8 +696,4 @@ void interact()
     } while (answer[0] != 'Q' && answer[0] != 'q');
 
     return;
-}
-
-
-
-
+};

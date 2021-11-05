@@ -27,6 +27,7 @@
 #include <iomanip>
 #include <string>
 #include <array>
+#include <cassert>
 using namespace std;
 
 void interact();
@@ -60,7 +61,7 @@ void testHeapSpraying();
 void testIntegerOverflow();
 void testAnsiUnicode();
 
-void myPointerMethod();
+void myPointerMethod() {}
 
 
 /*********************************************************************
@@ -320,7 +321,7 @@ void heapVulnerability(string input)
     char* buffer1 = new char[5]; // requires two buffers on the heap
     char* buffer2 = new char[5];
 
-    assert(buffer1 < buffer2); // buffer 1 must be before buffer 2!
+    //assert(buffer1 < buffer2); // buffer 1 must be before buffer 2!
     
     int i = 0;
     try {
@@ -336,7 +337,7 @@ void heapVulnerability(string input)
     }
     
     catch (exception ex) {
-        cout << "Congradulations, your heap has crashed. Please have a good one!" << endl;
+        cout << "Congratulations, your heap has crashed. Please have a good one!" << endl;
     }
 
     return;
@@ -376,9 +377,9 @@ void intVulnerability(int offset) {
     char* sentinel = buffer + 256;
 
     if (offset + buffer < sentinel)
-        cout << "Congradulations, you're safe!";
+        cout << "Congratulations, you're safe!";
     else
-        cout << "Congradulations, you've exploited this program!" << endl;
+        cout << "Congratulations, you've exploited this program!" << endl;
     return;
 
 };
@@ -391,7 +392,7 @@ void intWorking()
 
 void intExploit()
 {
-    int n = 256;
+    int n = 30000000000000000000000;
     intVulnerability(n);
 
 };
@@ -414,24 +415,21 @@ void testIntegerOverflow()
  * ANSI-Unicode Conversion
  **************************/
 
-void ansiVulnerability(short unicodeText1[256])
+void ansiVulnerability(short * unicodeText1, int buffSize)
 {
-        
-    short unicodeText2[256];
-    
-    cout << sizeof(unicodeText1) << endl;
+
+    short unicodeText2[20];
     
     // Copy unicodeText1 to unicodeText2
-    for (int i = 0; i < sizeof(unicodeText1); i++) 
+    for (int i = 0; i < buffSize; i++) 
     {
         unicodeText2[i] = unicodeText1[i];
-        cout << '[' << (char) unicodeText1 << ', ' << (char) unicodeText2 << ']' << endl;
     }
 
     cout << "Message:" << endl;
-    for (int i = 0; i < 256; i++) 
+    for (int i = 0; i < 20; i++) 
     {
-        if (unicodeText2[i] >= 'A' && unicodeText2[i] <= 'z')
+        if (unicodeText2[i] >= ' ' && unicodeText2[i] <= 'z')
             cout << (char) unicodeText2[i];
     }
 
@@ -441,13 +439,14 @@ void ansiVulnerability(short unicodeText1[256])
 
 void ansiWorking()
 {
-    short message[256] = {'H', 'E', 'L', 'L', 'O', 'S'};
-    ansiVulnerability(message);
+    short message[] = {'H', 'E', 'L', 'L', 'O'};
+    ansiVulnerability(message, sizeof(message));
 };
 
 void ansiExploit()
 {
-
+    short message[] = {'U',' ','R',' ','H','A','C','K','E','D','!','!'};
+    ansiVulnerability(message, sizeof(message));
 };
 
 void testAnsiUnicode() 

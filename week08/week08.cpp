@@ -38,7 +38,7 @@ void displayHeader();
 void clearScreen();
 
 void arrayVulnerability(int gimmieIndex);
-void arcVulnerability(void (*functionPointer)(string), string userInput);
+void arcVulnerability(char userInput[]);
 void pointerSubterfugeVulnerability(char myArray, char *secretPointer, char *publicPointer);
 void VTableSprayingVulnerability(struct myVtable);
 void stackVulnerability(char vulnerableText);
@@ -192,10 +192,21 @@ void arrayExploit()
  * 
  * Overwriting a function pointer so, when it is dereferenced, a
  * different function from the intended one gets executed.
+ * 
+ * sizeof(userInput) / sizeof(userInput[0]);
 *********************************************************************/
-void arcVulnerability(void (*functionPointer)(string), string userInput)
+void arcVulnerability(char userInput[])
 {
-    string message = userInput;
+    string message;
+    int counter;
+    int size = 60;
+    char buffer[6];
+    for (counter = 0; counter < size; counter++) {
+        buffer[counter] = userInput[counter];
+        message.push_back(userInput[counter]);
+    };
+
+    void (*functionPointer)(string) = &displayResult;
     functionPointer(message);
 };
 
@@ -206,9 +217,12 @@ void arcVulnerability(void (*functionPointer)(string), string userInput)
 *********************************************************************/
 void arcWorking()
 {
-    void (*functionPointer)(string);
-    functionPointer = &displayResult;
-    arcVulnerability(functionPointer, "hello");
+    string message;
+    
+    displayResult();
+
+    char userInput[] = {'h','e','l','l','o'};
+    arcVulnerability(userInput);
 };
 
 /*********************************************************************
@@ -219,7 +233,9 @@ void arcWorking()
 *********************************************************************/
 void arcExploit()
 {
-    // needs guts
+    char userInput[] = {'h','e','l','l','o','a','t','t','a','c','k','t','h','p','o','i','n','t','e','r'};
+    int size = 6;
+    arcVulnerability(userInput);
 };
 
 /*********************************************************************
@@ -230,7 +246,7 @@ void arcExploit()
 void testArcInjection()
 {
     arcWorking();
-    arcExploit();
+    // arcExploit();
 
 };
 

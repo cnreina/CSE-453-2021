@@ -65,45 +65,52 @@ void myPointerMethod() {}
 
 
 /*********************************************************************
-*  VTable Spraying
-*  class vulnerable to vtable smashing attack.
-*  there must be a method or two in this class that is vulnerable.
-*  Hint: You will need two classes to do this: a base class and a derived class.
+ * V-TABLE SPRAYING
+ * 1. The vulnerable class must be polymorphic.
+ * 2. The class must have a buffer as a member variable.
+ * 3. Through some vulnerability, there must be a way for user input
+ *    to overwrite parts of the V-Table.
+ * 4. After a virtual function pointer is overwritten, the virtual
+ *    function must be called.
 *********************************************************************/
 class Vulnerability
 {
-    /*
-    instantiates a Vulnerability object and calls the vulnerable method.
-    this method will behave normally because malicious input is not passed.
-    Provides output from this function. 
-    */
     public:
         long buffer[1];
         virtual void vtable();
         virtual void vtableUnsafe();
-    /*
-    demonstrates vtable spraying.
-    In other words, it is not necessary to demonstrate vtable smashing, but 
-    rather just spraying.
-    Provides output from this function. 
-    */
 };
+
+/*********************************************************************
+ * V-TABLE SPRAYING
+*********************************************************************/
 void Vulnerability::vtable()
 {
- cout << "Safe " << endl;
-}
+    cout << "Safe " << endl;
+};
 
+/*********************************************************************
+ * V-TABLE SPRAYING
+*********************************************************************/
 void Vulnerability::vtableUnsafe()
 {
- cout << "Unsafe method call" << endl;
-}
+    cout << "Unsafe method call" << endl;
+};
 
+/*********************************************************************
+ * V-TABLE SPRAYING
+ * Invokes class Vulnerability with non-malicious input.
+*********************************************************************/
 void vTableWorking()
 {
     Vulnerability v;
     v.vtable();
 };
 
+/*********************************************************************
+ * V-TABLE SPRAYING
+ * Invokes class Vulnerability with malicious input.
+*********************************************************************/
 void vTableExploit()
 {
     Vulnerability v;
@@ -114,9 +121,20 @@ void vTableExploit()
 
 };
 
-/**********************************************
- * MAIN : 
- **********************************************/
+/*********************************************************************
+ * V-TABLE SPRAYING
+*********************************************************************/
+void testVTableSpraying()
+{
+    cout << "V-TABLE SMASHING TEST:\n\n";
+
+    vTableWorking();
+    vTableExploit();
+};
+
+/*********************************************************************
+ * MAIN
+*********************************************************************/
 int main()
 {
     interact ();
@@ -124,56 +142,45 @@ int main()
 };
 
 /*********************************************************************
-*  ARRAY VULNERABILTY
-*   1. There must be an array and an array index variable
-*   2. The array index variable must be reachable through external input.
-*   3. There must not be bounds checking on the array index variable.
-*
-*  See page 137
+ * ARRAY INDEX
+ *  1. There must be an array and an array index variable
+ *  2. The array index variable must be reachable through external input.
+ *  3. There must not be bounds checking on the array index variable.
 *********************************************************************/
 void arrayVulnerability(int gimmieIndex) 
 {
-    int sheepArray[] = {1,2,3,4,5};  // Array with all the values.
-    cout << "    Array Value: " << sheepArray[gimmieIndex] << endl;  // Print out the array value.
-
-    sheepArray[gimmieIndex] = -1;  //book says "if index == 4, problem! therefore for us, if index == 5 problem?"
-
+    int sheepArray[] = {1,2,3,4,5};
+    cout << "\tArray Value: " << sheepArray[gimmieIndex] << "\n";
+    sheepArray[gimmieIndex] = -1;
 };
 
 /*********************************************************************
-* ARRAY WORKING
-* Call arrayVulnerability() in a way that does
-* not yield unexpected behavior
-* 
+ * ARRAY INDEX
+ * Calls arrayVulnerability() with non-malicious input.
 *********************************************************************/
 void arrayWorking()
 {
-    cout << "   Calling arrayVulnerability() with non-malicious input.\n\n"
-         << "   Result:\n\n";
+    cout << "\tCalling arrayVulnerability() with non-malicious input.\n\n"
+         << "\tResult:\n\n";
 
     arrayVulnerability(4);
 };
 
 /*********************************************************************
-* ARRAY EXPLOIT
- * 1. The attacker provides an array index value outside the expected range
- * 2. The attacker must be able to provide input or redirect
- *    existing input into the array at the index he provided
- * 3. The injected value must alter program state in a way
- *    that is desirable to the attacker
+ * ARRAY INDEX
+ * Calls arrayVulnerability() with malicious input.
 *********************************************************************/
 void arrayExploit()
 {
-    cout << "   Calling arrayVulnerability() with malicious input.\n\n"
-         << "   Result:\n\n";
+    cout << "\tCalling arrayVulnerability() with malicious input.\n\n"
+         << "\tResult:\n\n";
 
     arrayVulnerability(7);
     
 };
 
 /*********************************************************************
-*  ArrayIndex hack  from the book, page 137
-*  Called by interact()
+ * ARRAY INDEX
 *********************************************************************/
 void testArrayIndex() 
 {    
@@ -185,12 +192,13 @@ void testArrayIndex()
 /*********************************************************************
  * ARC INJECTION
  *  1 There must be a function pointer used in the code.
- *  2 Through some vulnerability, there must be a way for user input to
- *    overwrite the function pointer. This typically happens through a 
- *    stack buffer vulnerability.
- *  3 After the memory is overwritten, the function pointer must be dereferenced.
+ *  2 Through some vulnerability, there must be a way for user input
+ *    to overwrite the function pointer. This typically happens
+ *    through a stack buffer vulnerability.
+ *  3 After the memory is overwritten, the function pointer must be
+ *    dereferenced.
  * 
- * Overwriting a function pointer so, when it is dereferenced, a
+ * Overwrites a function pointer so, when it is dereferenced, a
  * different function from the intended one gets executed.
  * 
  * sizeof(userInput) / sizeof(userInput[0]);
@@ -211,29 +219,26 @@ void arcVulnerability(char userInput[])
 };
 
 /*********************************************************************
- *  calls arcVulnerability() with non-malicious input.
- *  the vulnerability function will behave normally. 
- *  Provides output from this function.
+ * ARC INJECTION
+ * calls arcVulnerability() with non-malicious input.
 *********************************************************************/
 void arcWorking()
 {
-    cout << "   Calling arcVulnerability() with non-malicious input.\n\n"
-         << "   Result:\n\n";
+    cout << "\tCalling arcVulnerability() with non-malicious input.\n\n"
+         << "\tResult:\n\n";
 
     char userInput[] = {'h','e','l','l','o'};
     arcVulnerability(userInput);
 };
 
 /*********************************************************************
- * EXPLOIT ARC INJECTION
- *  calls arcVulnerability().
- *  exploits ARC injection. 
- *  Provide output from this function.
+ * ARC INJECTION
+ * calls arcVulnerability() with malicious input.
 *********************************************************************/
 void arcExploit()
 {
-    cout << "   Calling arcVulnerability() with malicious input.\n\n"
-         << "   Result:\n\n";
+    cout << "\tCalling arcVulnerability() with malicious input.\n\n"
+         << "\tResult:\n\n";
     
     char userInput[] = {'h','e','l','l','o','a','t','t','a','c','k','t','h','p','o','i','n','t','e','r'};
     int size = 6;
@@ -241,9 +246,7 @@ void arcExploit()
 };
 
 /*********************************************************************
- * TEST ARC INJECTION
- *  1 Calls arcWorking()
- *  2 Calls arcExploit()
+ * ARC INJECTION
 *********************************************************************/
 void testArcInjection()
 {
@@ -254,11 +257,12 @@ void testArcInjection()
 };
 
 /*********************************************************************
+ * POINTER SUBTERFUGE
  * 1. There must be a pointer used in the code.
  * 2. Through some vulnerability, there must be a way for user input
  *    to overwrite the pointer.
  *    This typically happens through a stack buffer vulnerability.
- * 3. After the pointer is overwritten, the pointer must be dereferenced.
+ * 3. After being overwritten, the pointer must be dereferenced.
 *********************************************************************/
 void pointerSubterfugeVulnerability(char myArray, char *secretPointer, char *publicPointer)
 {
@@ -266,12 +270,13 @@ void pointerSubterfugeVulnerability(char myArray, char *secretPointer, char *pub
 };
 
 /*********************************************************************
- * 
+ * POINTER SUBTERFUGE
+ * calls pointerSubterfugeVulnerability() with non-malicious input.
 *********************************************************************/
 void pointerWorking()
 {
-    // cout << "   Calling pointerSubterfugeVulnerability() with non-malicious input.\n\n"
-    //      << "   Result:\n\n";
+    cout << "\tCalling pointerSubterfugeVulnerability() with non-malicious input.\n\n"
+         << "\tResult:\n\n";
 
     // char myArray[7];
     // char * secretPointer = "arglefraster";
@@ -281,13 +286,13 @@ void pointerWorking()
 };
 
 /*********************************************************************
-*  pointer subterfuge hack from the quiz question 8
-*  Called by interact()
+ * POINTER SUBTERFUGE
+ * calls pointerSubterfugeVulnerability() with malicious input.
 *********************************************************************/
 void pointerExploit()
 {
-    // cout << "   Calling pointerSubterfugeVulnerability() with malicious input.\n\n"
-    //      << "   Result:\n\n";
+    cout << "\tCalling pointerSubterfugeVulnerability() with malicious input.\n\n"
+         << "\tResult:\n\n";
     
     // char myArray[7];
     // char * secretPointer = "arglefraster";
@@ -296,6 +301,9 @@ void pointerExploit()
     // pointerSubterfugeVulnerability(*myArray, secretPointer, publicPointer);
 };
 
+/*********************************************************************
+ * POINTER SUBTERFUGE
+*********************************************************************/
 void testPointerSubterfuge()
 {
     cout << "POINTER SUBTERFUGE TEST:\n\n";
@@ -306,6 +314,7 @@ void testPointerSubterfuge()
 
 
 /*********************************************************************
+ * STACK SMASHING
  * 1. There must be a buffer (such as an array) on the stack.
  * 2. The buffer must be reachable from an external input.
  * 3. The mechanism to fill the buffer from the external input must
@@ -318,10 +327,14 @@ void stackVulnerability(char vulnerableText)
     cout << "text value : " << vulnerableText << endl;
 };
 
+/*********************************************************************
+ * STACK SMASHING
+ * Calls stackVulnerability() with non-malicious input.
+*********************************************************************/
 void stackWorking()
 {
-    cout << "   Calling stackVulnerability() with non-malicious input.\n\n"
-         << "   Result:\n\n";
+    cout << "\tCalling stackVulnerability() with non-malicious input.\n\n"
+         << "\tResult:\n\n";
 
     char* buffer1 = new char[5];
     buffer1[0] = 'h';
@@ -333,16 +346,23 @@ void stackWorking()
 
 };
 
+/*********************************************************************
+ * STACK SMASHING
+ * Calls stackVulnerability() with malicious input.
+*********************************************************************/
 void stackExploit()
 {
-    cout << "   Calling stackVulnerability() with malicious input.\n\n"
-         << "   Result:\n\n";
+    cout << "\tCalling stackVulnerability() with malicious input.\n\n"
+         << "\tResult:\n\n";
     
     char* buffer1 = new char[5];
     stackVulnerability(*buffer1);
 
 };
 
+/*********************************************************************
+ * STACK SMASHING
+*********************************************************************/
 void testStackSmashing()
 {
     cout << "POINTER SUBTERFUGE TEST:\n\n";
@@ -501,14 +521,6 @@ void testAnsiUnicode()
     cout << "\tExploit\n\n";
 
     ansiExploit();
-};
-
-void testVTableSpraying()
-{
-    cout << "V-TABLE SMASHING TEST:\n\n";
-
-    vTableWorking();
-    vTableExploit();
 };
 
 /*********************************************************************

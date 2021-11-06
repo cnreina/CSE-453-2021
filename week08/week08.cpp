@@ -273,9 +273,28 @@ void testArcInjection()
  *    This typically happens through a stack buffer vulnerability.
  * 3. After being overwritten, the pointer must be dereferenced.
 *********************************************************************/
-void pointerSubterfugeVulnerability(char myArray, char *secretPointer, char *publicPointer)
+void pointerSubterfugeVulnerability(char* userInput)
 {
-    cout << *publicPointer << "\n";
+    string message;
+    int counter;
+    int size = 60;
+    char buffer[6];
+
+    try
+    {
+        for (counter = 0; counter < size; counter++) {
+            buffer[counter] = userInput[counter];
+            message.push_back(userInput[counter]);
+        };
+
+        void (*functionPointer)(string) = &displayResult;
+        functionPointer(message);
+    }
+    catch (exception exept)
+    {
+        cout << "\tOOPS! Program crashed!\n\n";
+        return;
+    }
 };
 
 /*********************************************************************
@@ -287,11 +306,9 @@ void pointerWorking()
     cout << "\tCalling pointerSubterfugeVulnerability() with non-malicious input.\n\n"
          << "\tResult:\n\n";
 
-    // char myArray[7];
-    // char * secretPointer = "arglefraster";
-    // char * publicPointer = "princess cimorene";
+    char userInput[] = { 'h','e','l','l','o' };
+    arcVulnerability(userInput);
 
-    // pointerSubterfugeVulnerability(*myArray, secretPointer, publicPointer);
 };
 
 /*********************************************************************
@@ -303,11 +320,10 @@ void pointerExploit()
     cout << "\tCalling pointerSubterfugeVulnerability() with malicious input.\n\n"
          << "\tResult:\n\n";
     
-    // char myArray[7];
-    // char * secretPointer = "arglefraster";
-    // char * publicPointer = "princess cimorene";
+    char userInput[] = { 'h','e','l','l','o','a','t','t','a','c','k','t','h','p','o','i','n','t','e','r' };
+    int size = 6;
+    arcVulnerability(userInput);
 
-    // pointerSubterfugeVulnerability(*myArray, secretPointer, publicPointer);
 };
 
 /*********************************************************************

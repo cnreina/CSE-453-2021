@@ -69,8 +69,6 @@ void myPointerMethod() {}
 *  class vulnerable to vtable smashing attack.
 *  there must be a method or two in this class that is vulnerable.
 *  Hint: You will need two classes to do this: a base class and a derived class.
-*  Hint: For extra credit, can you demonstrate VTable Smashing?
-*
 *********************************************************************/
 class Vulnerability
 {
@@ -79,48 +77,41 @@ class Vulnerability
     this method will behave normally because malicious input is not passed.
     Provides output from this function. 
     */
-    void vtableWorking(){};
-    
+    public:
+        long buffer[1];
+        virtual void vtable();
+        virtual void vtableUnsafe();
     /*
     demonstrates vtable spraying.
     In other words, it is not necessary to demonstrate vtable smashing, but 
     rather just spraying.
     Provides output from this function. 
     */
-    void vtableExploit(){};
+};
+void Vulnerability::vtable()
+{
+ cout << "Safe " << endl;
+}
+
+void Vulnerability::vtableUnsafe()
+{
+ cout << "Unsafe method call" << endl;
+}
+
+void vTableWorking()
+{
+    Vulnerability v;
+    v.vtable();
+};
+
+void vTableExploit()
+{
+    Vulnerability v;
+
+    v.buffer[2] = 1;
     
-};
+    v.vtable();
 
-/*********************************************************************
-*  VTable Spraying
-*  Derived class
-*********************************************************************/
-class VulnerabilityDerived : public Vulnerability
-{
-    
-};
-
-/*********************************************************************
-*  vtable for my vtable smash, thank me boys, 
-* the original name for the struct was: 
-* "VerilyEvincedVisibleAndEvidentVulnerableVtable"
-*********************************************************************/
-struct VulnerableVTable
-{
-    /*in the quiz question 5 there is a public:
-    word above the single variable and 2 virtual functions*/
-    char myText[256];
-    virtual void naive();
-    virtual void malignant();
-
-};
-
-void VulnerableVTable::naive()
-{
-};
-
-void VulnerableVTable::malignant()
-{ 
 };
 
 /**********************************************
@@ -133,10 +124,6 @@ int main()
 };
 
 /*********************************************************************
-*  ARRAY INDEX
-*********************************************************************/
-
-/*********************************************************************
 *  ARRAY VULNERABILTY
 *   1. There must be an array and an array index variable
 *   2. The array index variable must be reachable through external input.
@@ -146,11 +133,9 @@ int main()
 *********************************************************************/
 void arrayVulnerability(int gimmieIndex) 
 {
-    int sheepArray[] = {1,2,3,4,5};  // a vulnerable soft meek array like a sheep
-    cout << "Array Value: " << sheepArray[gimmieIndex] << endl;  // I guess to do array index, we have to have a check that actually makes the array vulnerable rather than safe?
+    int sheepArray[] = {1,2,3,4,5};  // Array with all the values.
+    cout << "    Array Value: " << sheepArray[gimmieIndex] << endl;  // Print out the array value.
 
-    //int gimmieIndex;
-    //cin >> gimmieIndex;
     sheepArray[gimmieIndex] = -1;  //book says "if index == 4, problem! therefore for us, if index == 5 problem?"
 
 };
@@ -163,7 +148,9 @@ void arrayVulnerability(int gimmieIndex)
 *********************************************************************/
 void arrayWorking()
 {
-    // Pass in valid value to the array vulnerability 
+    cout << "   Calling arrayVulnerability() with non-malicious input.\n\n"
+         << "   Result:\n\n";
+
     arrayVulnerability(4);
 };
 
@@ -177,9 +164,22 @@ void arrayWorking()
 *********************************************************************/
 void arrayExploit()
 {
-    // Pass in an invalid value to exploit the array.
+    cout << "   Calling arrayVulnerability() with malicious input.\n\n"
+         << "   Result:\n\n";
+
     arrayVulnerability(7);
     
+};
+
+/*********************************************************************
+*  ArrayIndex hack  from the book, page 137
+*  Called by interact()
+*********************************************************************/
+void testArrayIndex() 
+{    
+    cout << "ARRAY INDEX TEST:\n\n";
+    arrayWorking();
+    arrayExploit();
 };
 
 /*********************************************************************
@@ -248,72 +248,81 @@ void arcExploit()
 void testArcInjection()
 {
     cout << "ARC INJECTION TEST:\n\n";
-
     arcWorking();
     arcExploit();
 
 };
 
 /*********************************************************************
-*  pointer subterfuge hack from the quiz question 8
-*  Called by interact()
+ * 1. There must be a pointer used in the code.
+ * 2. Through some vulnerability, there must be a way for user input
+ *    to overwrite the pointer.
+ *    This typically happens through a stack buffer vulnerability.
+ * 3. After the pointer is overwritten, the pointer must be dereferenced.
 *********************************************************************/
 void pointerSubterfugeVulnerability(char myArray, char *secretPointer, char *publicPointer)
 {
-
-    // quiz question 8 has array[8] i did 7 so we aren't "copying"     
-
-    /*for above, the quiz question 8 makes the number i have "19" bigger than the size of "Citizen Kane",
-    which is 12 charand getline is 17, so my "princess cimorene" is 17 so i made the 17 in getline into a 19*/
-
-    cout << *publicPointer << endl;
-
+    cout << *publicPointer << "\n";
 };
 
+/*********************************************************************
+ * 
+*********************************************************************/
 void pointerWorking()
 {
+    // cout << "   Calling pointerSubterfugeVulnerability() with non-malicious input.\n\n"
+    //      << "   Result:\n\n";
 
-};
+    // char myArray[7];
+    // char * secretPointer = "arglefraster";
+    // char * publicPointer = "princess cimorene";
 
-void pointerExploit()
-{
-
+    // pointerSubterfugeVulnerability(*myArray, secretPointer, publicPointer);
 };
 
 /*********************************************************************
-*  vtable smash  
+*  pointer subterfuge hack from the quiz question 8
 *  Called by interact()
 *********************************************************************/
-void VTableSprayingVulnerability(struct VulnerableVTable) 
+void pointerExploit()
 {
+    // cout << "   Calling pointerSubterfugeVulnerability() with malicious input.\n\n"
+    //      << "   Result:\n\n";
     
-    //VulnerableVTable::naive();  
+    // char myArray[7];
+    // char * secretPointer = "arglefraster";
+    // char * publicPointer = "princess cimorene";
 
-    /*above, my understanding is, once we give access to the pointer 
-    or buffer of a vtable, we have let the crazies control the 
-    madhouse*/
-
+    // pointerSubterfugeVulnerability(*myArray, secretPointer, publicPointer);
 };
 
+void testPointerSubterfuge()
+{
+    cout << "POINTER SUBTERFUGE TEST:\n\n";
+
+    pointerWorking();
+    pointerExploit();
+};
+
+
 /*********************************************************************
-*  stack smash from the sounds of it, this is the bread and butter
-*  of all hackers, seems pretty simple to actually build 
-*  vulnerable code for this too, just let a string, array, or buffer 
-*  be exposed naked to input.
-*  Called by interact()
+ * 1. There must be a buffer (such as an array) on the stack.
+ * 2. The buffer must be reachable from an external input.
+ * 3. The mechanism to fill the buffer from the external input must
+ *    not correctly check for the buffer size.
+ * 4. A buffer overrun (extend beyond the intended limits of the array)
+ *    must extend to the return address on the stack.
 *********************************************************************/
 void stackVulnerability(char vulnerableText)
 {
-    
     cout << "text value : " << vulnerableText << endl;
-    
-    // I don't know what to write here, we overwrite the buffer when we do a Cin and Cin is in "testStackSmashing"
-
 };
 
 void stackWorking()
 {
-    // Valid input that will output correctly
+    cout << "   Calling stackVulnerability() with non-malicious input.\n\n"
+         << "   Result:\n\n";
+
     char* buffer1 = new char[5];
     buffer1[0] = 'h';
     buffer1[1] = 'e';
@@ -326,16 +335,30 @@ void stackWorking()
 
 void stackExploit()
 {
-    // Invalid input that will exploit the buffer
+    cout << "   Calling stackVulnerability() with malicious input.\n\n"
+         << "   Result:\n\n";
+    
     char* buffer1 = new char[5];
     stackVulnerability(*buffer1);
 
 };
 
+void testStackSmashing()
+{
+    cout << "POINTER SUBTERFUGE TEST:\n\n";
+    stackWorking();
+    stackExploit();
+};
 
-/**************************
- * HeapSpraying 
- **************************/
+/*********************************************************************
+ * 1. There must be two adjacent heap buffers.
+ * 2. The first buffer must be reachable through external input.
+ * 3. The mechanism to fill the buffer from the external input must
+ *    not correctly check for the buffer size.
+ * 4. The second buffer must be released before the first.
+ * 5. The first buffer must be overrun (extend beyond the intended
+ *    limits of the array).
+*********************************************************************/
 void heapVulnerability(string input)
 {
     char* buffer1 = new char[5]; // requires two buffers on the heap
@@ -365,27 +388,26 @@ void heapVulnerability(string input)
 
 void heapWorking()
 {
-    cout << "Testing heap with string 'Test'.";
+    cout << "   Calling heapVulnerability() with non-malicious input.\n\n"
+         << "   Result:\n\n";
+
     heapVulnerability("Test");
     cout << "Test worked.";
 };
 
 void heapExploit()
 {
-    cout << "Testing heap with string 'This is too long!'\n";
+    cout << "   Calling heapVulnerability() with malicious input.\n\n"
+         << "   Result:\n\n";
+
     heapVulnerability("This is too long!");
     cout << "If this prints, the program didn't crash. It's a miracle!\n";
 };
 
 void testHeapSpraying()
 {
-    cout << "HeapSpraying\n"
-        << "\tWorking\n\n";
-
+    cout << "HEAP SPRAYING TEST:\n\n";
     heapWorking();
-
-    cout << "\tExploit\n\n";
-
     heapExploit();
 };
 
@@ -406,6 +428,9 @@ void intVulnerability(int offset) {
 
 void intWorking()
 {
+    cout << "   Calling intVulnerability() with non-malicious input.\n\n"
+         << "   Result:\n\n";
+
     int n = 255;
     cout << "Offset: " << n << endl;
     intVulnerability(n);
@@ -413,6 +438,9 @@ void intWorking()
 
 void intExploit()
 {
+    cout << "   Calling intVulnerability() with malicious input.\n\n"
+         << "   Result:\n\n";
+    
     long n = 3000000000000000;
     cout << "Offset: " << n << endl;
     intVulnerability((int) n);
@@ -421,15 +449,9 @@ void intExploit()
 
 void testIntegerOverflow()
 {
-    cout << "Integer Overflow\n"
-        << "\tWorking\n\n";
-
+    cout << "INTEGER OVERFLOW TEST:\n\n";
     intWorking();
-
-    cout << "\n\n\tExploit\n\n";
-
     intExploit();
-    cout << "\n\n";
 };
 
 
@@ -439,7 +461,6 @@ void testIntegerOverflow()
 
 void ansiVulnerability(short * unicodeText1, int buffSize)
 {
-
     short unicodeText2[20];
     
     // Copy unicodeText1 to unicodeText2
@@ -456,7 +477,6 @@ void ansiVulnerability(short * unicodeText1, int buffSize)
     }
 
     cout << endl;
-    
 };
 
 void ansiWorking()
@@ -483,48 +503,12 @@ void testAnsiUnicode()
     ansiExploit();
 };
 
-/*********************************************************************
-*  ArrayIndex hack  from the book, page 137
-*  Called by interact()
-*********************************************************************/
-void testArrayIndex() 
-{    
-    // Test the array index.
-    arrayWorking();
-    arrayExploit();
-};
-
-
-
-void testStackSmashing()
-{
-    // Test the Stack.
-    stackWorking();
-    stackExploit();
-};
-
-void testPointerSubterfuge()
-{
-
-    // char myArray[7];  // quiz question 8 has array[8] i did 7 so we aren't "copying"
-    // char * secretPointer = "arglefraster";
-    // char * publicPointer = "princess cimorene";
-
-    // pointerSubterfugeVulnerability(*myArray, secretPointer, publicPointer);
-    
-};
-
 void testVTableSpraying()
 {
+    cout << "V-TABLE SMASHING TEST:\n\n";
 
-    VulnerableVTable myVtable;
-
-    /*above, my understanding is, once we give access to the pointer 
-    or buffer of a vtable, we have let the crazies control the 
-    madhouse*/
-
-    VTableSprayingVulnerability(myVtable);
-
+    vTableWorking();
+    vTableExploit();
 };
 
 /*********************************************************************

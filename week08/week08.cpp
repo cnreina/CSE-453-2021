@@ -217,9 +217,8 @@ void arcVulnerability(char userInput[])
 *********************************************************************/
 void arcWorking()
 {
-    string message;
-    
-    displayResult();
+    cout << "   Calling arcVulnerability() with non-malicious input.\n\n"
+         << "   Result:\n\n";
 
     char userInput[] = {'h','e','l','l','o'};
     arcVulnerability(userInput);
@@ -233,6 +232,9 @@ void arcWorking()
 *********************************************************************/
 void arcExploit()
 {
+    cout << "   Calling arcVulnerability() with malicious input.\n\n"
+         << "   Result:\n\n";
+    
     char userInput[] = {'h','e','l','l','o','a','t','t','a','c','k','t','h','p','o','i','n','t','e','r'};
     int size = 6;
     arcVulnerability(userInput);
@@ -245,12 +247,12 @@ void arcExploit()
 *********************************************************************/
 void testArcInjection()
 {
+    cout << "ARC INJECTION TEST:\n\n";
+
     arcWorking();
-    // arcExploit();
+    arcExploit();
 
 };
-
-
 
 /*********************************************************************
 *  pointer subterfuge hack from the quiz question 8

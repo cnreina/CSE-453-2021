@@ -307,7 +307,7 @@ void pointerWorking()
          << "\tResult:\n\n";
 
     char userInput[] = { 'h','e','l','l','o' };
-    arcVulnerability(userInput);
+    pointerSubterfugeVulnerability(userInput);
 
 };
 
@@ -322,7 +322,7 @@ void pointerExploit()
     
     char userInput[] = { 'h','e','l','l','o','a','t','t','a','c','k','t','h','p','o','i','n','t','e','r' };
     int size = 6;
-    arcVulnerability(userInput);
+    pointerSubterfugeVulnerability(userInput);
 
 };
 

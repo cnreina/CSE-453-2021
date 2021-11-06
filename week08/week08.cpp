@@ -409,7 +409,7 @@ void heapVulnerability(string input)
     }
     
     catch (exception ex) {
-        cout << "Congratulations, your heap has crashed. Please have a good one!" << "\n";
+        cout << "Congratulations, your heap has crashed. Please have a good one!\n\n";
     }
 
     return;
@@ -421,7 +421,7 @@ void heapWorking()
          << "   Result:\n\n";
 
     heapVulnerability("Test");
-    cout << "Test worked.";
+    cout << "Test worked.\n\n";
 };
 
 void heapExploit()
@@ -430,7 +430,7 @@ void heapExploit()
          << "   Result:\n\n";
 
     heapVulnerability("This is too long!");
-    cout << "If this prints, the program didn't crash. It's a miracle!\n";
+    cout << "If this prints, the program didn't crash. It's a miracle!\n\n";
 };
 
 void testHeapSpraying()

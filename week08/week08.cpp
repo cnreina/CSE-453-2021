@@ -209,13 +209,22 @@ void arcVulnerability(char userInput[])
     int counter;
     int size = 60;
     char buffer[6];
-    for (counter = 0; counter < size; counter++) {
-        buffer[counter] = userInput[counter];
-        message.push_back(userInput[counter]);
-    };
 
-    void (*functionPointer)(string) = &displayResult;
-    functionPointer(message);
+    try
+    {
+        for (counter = 0; counter < size; counter++) {
+            buffer[counter] = userInput[counter];
+            message.push_back(userInput[counter]);
+        };
+
+        void (*functionPointer)(string) = &displayResult;
+        functionPointer(message);
+    }
+    catch (exception exept)
+    {
+        cout << "\tOOPS! Program crashed!\n\n";
+        return;
+    }
 };
 
 /*********************************************************************
@@ -400,7 +409,7 @@ void heapVulnerability(string input)
     }
     
     catch (exception ex) {
-        cout << "Congratulations, your heap has crashed. Please have a good one!" << endl;
+        cout << "Congratulations, your heap has crashed. Please have a good one!" << "\n";
     }
 
     return;
@@ -448,8 +457,8 @@ void intVulnerability(int offset) {
 
 void intWorking()
 {
-    cout << "   Calling intVulnerability() with non-malicious input.\n\n"
-         << "   Result:\n\n";
+    cout << "\tCalling intVulnerability() with non-malicious input.\n\n"
+         << "\tResult:\n\n";
 
     int n = 255;
     cout << "Offset: " << n << endl;
@@ -458,8 +467,8 @@ void intWorking()
 
 void intExploit()
 {
-    cout << "   Calling intVulnerability() with malicious input.\n\n"
-         << "   Result:\n\n";
+    cout << "\tCalling intVulnerability() with malicious input.\n\n"
+         << "\tResult:\n\n";
     
     long n = 3000000000000000;
     cout << "Offset: " << n << endl;

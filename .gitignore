@@ -17,3 +17,5 @@ a.out
 *.dSYM
 *App
 Debug
+/CSE453Project
+/CppProperties.json

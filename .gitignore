@@ -1,6 +1,7 @@
 .DS_Store
 .vs
 workspace.code-workspace
+*.code-workspace
 .DS_Store
 .vs
 .vscode

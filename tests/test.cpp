@@ -21,14 +21,16 @@ using namespace std;
  ********************************************************************/
 int main()
 {
-    // get the secret
+   // get the secret
    string secret;
    cout << "What is the secret?   ";
    cin  >> secret;
+
    // get the password
    string password;
    cout << "What is the password? ";
    cin  >> password;
+
    // now go in a holding pattern until the user provides the correct password
    string prompt;
    do
@@ -37,7 +39,9 @@ int main()
       cin  >> prompt;
    }
    while (prompt != password);
+
    // reveal the secret
    cout << "The secret is " << secret << endl;      
+   
    return 0;
 }

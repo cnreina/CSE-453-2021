@@ -16,32 +16,41 @@
 #include <string>
 using namespace std;
 
-/*********************************************************************
- * MAIN : 
- ********************************************************************/
+class Secret
+{
+public:
+   // constructor: set the secret and the pin
+   Secret() : secret("Rosebud"), pin(1234) {}
+ 
+   // GET: reveal the secret to those who ask for it
+   string get(int pin) { return (authenticate(pin)) ? secret : string(""); }
+ 
+private:
+   string secret;            // the secret to be protected at all costs
+   int    pin;               // the password required to reveal the secret
+ 
+   // AUTHENTICATE : Determine if the passed PIN is what was expected  
+   bool authenticate(int pinUser) { return (pinUser == pin); }
+};
+ 
 int main()
 {
-   // get the secret
-   string secret;
-   cout << "What is the secret?   ";
-   cin  >> secret;
-
-   // get the password
-   string password;
-   cout << "What is the password? ";
-   cin  >> password;
-
-   // now go in a holding pattern until the user provides the correct password
-   string prompt;
-   do
-   {
-      cout << "You can get the secret only with the password: ";
-      cin  >> prompt;
-   }
-   while (prompt != password);
-
-   // reveal the secret
-   cout << "The secret is " << secret << endl;      
-   
+   // this is the secret, locked deep within
+   Secret s;
+  
+   // prompt for the pin
+   int pin;
+   cout << "If you want the secret, you need to give me the PIN: ";
+   cin  >> pin;
+ 
+   // fetch the secret
+   string secret = s.get(pin);
+ 
+   // give the user the answer
+   if (secret.size() != 0)
+      cout << "The secret is... " << secret << endl;
+   else
+      cout << "I am not going to tell you!\n";
+ 
    return 0;
 }

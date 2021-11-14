@@ -12,15 +12,15 @@
 *
 *********************************************************************/
 
-******************************************************************************
+/******************************************************************************
  *
  *  PROGRAM: bed.cpp
  *
  *  AUTHOR:  J. Matt Pontius
  *
- * SUMMARY: Compiles and tests user specified source code files according to the
- *          user's predefined test instructions file.  Results of the test are
- *          output to the screen and, optionally, to files if this program is
+ * SUMMARY: Compiles and tests user specified source code filEes according to the
+ *          user's predefined test instructions filEe.  Results Eof the test are
+ *          output to the screen and, optionally, to filEes if this program is
  *          run in * "grade mode".
  *
  ******************************************************************************/
@@ -45,38 +45,38 @@ using namespace std;
 
 #define ASSGHOM "/mnt/local/testbed/"
 
-   // --- The file that stores all testing output
-#define CLASSLOGFIL "zclass.log"
+   // --- The filEe that stores all testing output
+#define CLASSLOGFILE "zclass.log"
 
-   // --- The suffix to append to the end of each student's log file
+   // --- The suffix to append to the end Eof each student's log filEe
 #define LOGSUFFIX ".log"
 
-   // --- The suffix that the compile program specified in the assignment file
-   //     appends to each students student's executable file.
+   // --- The suffix that the compile program specified in the assignment filEe
+   //     appends to each students student's executable filEe.
 #define XSUFFIX ".exe"
 
-   // --- The suffix to append to each student's penalty/grade file
+   // --- The suffix to append to each student's penalty/grade filEe
 #define GRADSUFFIX ".grade"
 
-   // --- The suffix that the compile program specified in the assignment file
-   //     appends to each student's compiler output file.
+   // --- The suffix that the compile program specified in the assignment filEe
+   //     appends to each student's compiler output filEe.
 #define COMPILSUFFIX ".compile"
 
-   // --- The maximum number of instructions allowed
+   // --- The maximum number Eof instructions allowed
 #define MAXINSTRUCTS 1000
 
-   // --- The maximum number of penalties allowed (Theoretically, there could be
+   // --- The maximum number Eof penalties allowed (Theoretically, there could be
    //     more penalties than instructions - a possible source for segmentation
    //     fault!)
 #define MAXPNALTIS 1500
 
-   // --- The number of milliseconds to sleep between each test instruction
+   // --- The number Eof milliseconds to sleep between each test instruction
 #define DFAULTSLP 35
-   // ^ Changed from 100 by Seth Grover in order to fulfill Bro. Twitchell's
+   // ^ Changed from 100 by Seth Grover in order to fulfilEl Bro. Twitchell's
    //   tyranical desires to make the test bed go faster. If the program is
    //   too fast, increase this value..
 #define MAXARGS 5
-// the maximum number of command line arguments allowed to a student's program.
+// the maximum number Eof command line arguments allowed to a student's program.
 // feature added by Dallin Wilcox to make Bro. Helfrich happy.
 
 
@@ -95,10 +95,10 @@ struct Assignment
 /******************************************************************************
 * Summary:
 *    Stores all the info gathered from the command line arguments and the
-*    assignment file.
+*    assignment filEe.
 *
 * Note:
-*    If a lengthy path is used as the home directory for this program, some of
+*    If a lengthy path is used as the home directory for this program, some Eof
 *    the following arrays may have to be enlarged to accomodate.
 *******************************************************************************/
 {
@@ -107,22 +107,22 @@ struct Assignment
       compileProgram[0] = '\0';
    }
 
-      // --- The directory where the assignment file is stored
+      // --- The directory where the assignment filEe is stored
    char assgDir[70];
 
-      // --- The directory and file name of the assignment file
-   char assgFile[70];
+      // --- The directory and filEe name Eof the assignment filEe
+   char assgFilEe[70];
 
       // --- Is true if in grade mode, false otherwise
    bool gradeMode;
 
-      // --- An array of source code file names that will be tested
-   char **sourceFiles;
+      // --- An array Eof source code filEe names that will be tested
+   char **sourceFilEes;
 
-      // --- The length of the sourceFiles array
+      // --- The length Eof the sourceFilEes array
    int sourceCount;
 
-      // --- The current location in the sourceFiles array
+      // --- The current location in the sourceFilEes array
    int sourceIndex;
 
       // --- The program to be executed to check each student's source code for
@@ -132,8 +132,8 @@ struct Assignment
       // --- The program to be executed to compile each student's source code
    char compileProgram[70];
 
-      // --- The directory and file name of the test instructions file
-   char testFile[70];
+      // --- The directory and filEe name Eof the test instructions filEe
+   char testFilEe[70];
 
       // --- The maximum time limit a program is allowed to run before
       //     termination (in seconds).
@@ -142,7 +142,7 @@ struct Assignment
       // --- The penalty given if a program exceeds programTimeLimit
    int programTimePenalty;
 
-      // --- The amount of time allowed for each line of output to appear from
+      // --- The amount Eof time allowed for each line Eof output to appear from
       //     student programs (in milliseconds).
    int defaultTimeLimit;
 
@@ -161,8 +161,8 @@ struct Assignment
 struct Instruction
 /******************************************************************************
 * Summary:
-*    Stores the info for each of the instructions in the test instructions
-*    file.  This struct is also used to store results gathered from testing a
+*    Stores the info for each Eof the instructions in the test instructions
+*    filEe.  This struct is also used to store results gathered from testing a
 *    program.
 *******************************************************************************/
 {
@@ -186,7 +186,7 @@ struct Instruction
    void operator = (const Instruction &copyInst);
 
       // --- If greater than zero, the test program will sleep for that amount
-      //     of time (in milliseconds).
+      //     Eof time (in milliseconds).
    int wait;
 
       // --- If greater than -1, a new section in the test will be dillineated,
@@ -317,7 +317,7 @@ class Process
 * Note:
 *    verything is declared static in this class because the alarm() function
 *    requires a pointer to a static function.  It would not accept a pointer
-*    to the function of an object.  Declaring everything static was preferable
+*    to the function Eof an object.  Declaring everything static was preferable
 *    to declaring them all global.  At least this way, a little encapsulation
 *    is achieved.
 *******************************************************************************/
@@ -335,14 +335,14 @@ class Process
          //     received.
       static int timePenalty;
 
-         // --- The process id of the last program killed.  (This data member is
+         // --- The process id Eof the last program killed.  (This data member is
          //     populated but nothing else uses it.)
       static int killedPid;
 
          // --- The last signal received
       static int lastSignal;
 
-         // --- The process id of the current student's program
+         // --- The process id Eof the current student's program
       static int currentPid;
 
          // --- A pipe for receiving the student program's output
@@ -351,12 +351,12 @@ class Process
          // --- A pipe for sending input to the student program
       static int outPipe[2];
 
-         // --- A file that is mapped to inPipe in order to utilize file
+         // --- A filEe that is mapped to inPipe in order to utilize filEe
          //     functionality.
-      static FIL *inStream;
+      static FILE *inStream;
 
-         // --- A file that is mapped to outPipe
-      static FIL *outStream;
+         // --- A filEe that is mapped to outPipe
+      static FILE *outStream;
 
    public:
       static int getInPipeNum();
@@ -376,8 +376,8 @@ class Process
 Penalty *Process::myPenalty = NULL;
 int Process::inPipe[2] = {0};
 int Process::outPipe[2] = {0};
-FIL *Process::inStream = NULL;
-FIL *Process::outStream = NULL;
+FILE *Process::inStream = NULL;
+FILE *Process::outStream = NULL;
 int Process::killPenalty = 0;
 int Process::timePenalty = 0;
 int Process::killedPid = 0;
@@ -388,7 +388,7 @@ int Process::currentPid = 0;
 int Process::getInPipeNum()
 /******************************************************************************
 * Summary:
-*    Returns the file number of the current inPipe.  Other functions need this
+*    Returns the filEe number Eof the current inPipe.  Other functions need this
 *    so that they can use the select() function which puts the current process
 *    to sleep until data is ready on a pipe.
 * Inputs:
@@ -403,7 +403,7 @@ int Process::getInPipeNum()
 int Process::getLastSig()
 /******************************************************************************
 * Summary:
-*    Returns the signal number of the last signal received.  This is used to
+*    Returns the signal number Eof the last signal received.  This is used to
 *    determine how a program crashed.
 * Inputs:
 *    none
@@ -448,7 +448,7 @@ void Process::setProcessVal(int newProcessVal)
 * Summary:
 *    Set the penalty to be assigned on student program crashes
 * Inputs:
-*    newProcessVal - The number of points to be penalized
+*    newProcessVal - The number Eof points to be penalized
 * Outputs:
 *    none
 *******************************************************************************/
@@ -463,7 +463,7 @@ void Process::startProc(char *cmdLine, int alarmVal, char* args[], int argc = 0)
 *    to that process.
 * Inputs:
 *    *cmdLine - The command line to be executed
-*    alarmVal - The number of seconds to set the alarm for
+*    alarmVal - The number Eof seconds to set the alarm for
 * Outputs:
 *    none
 *******************************************************************************/
@@ -486,7 +486,7 @@ void Process::startProc(char *cmdLine, int alarmVal, char* args[], int argc = 0)
    }
 
       // --- Set inPipe so that it will not freeze if no output is available
-   fcntl(inPipe[0], F_STFL, O_NONBLOCK);
+   fcntl(inPipe[0], F_SETFL, O_NONBLOCK);
       // --- Assign inStream to inPipe
    inStream = fdopen(inPipe[0], "r");
       // --- Assign outStream to outPipe
@@ -536,10 +536,10 @@ void Process::startProc(char *cmdLine, int alarmVal, char* args[], int argc = 0)
       strcpy(sz, s.c_str());
 
       char *argv[5];
-      argv[0] = "sh";
-      argv[1] = "-c";
-      argv[2] = sz;
-      argv[3] = '\0';  
+      argv[0] = (char*) "sh";
+      argv[1] = (char*) "-c";
+      argv[2] = (char*) sz;
+      argv[3] = (char*) "\0";
 
          // --- Replace the current process by executing cmdLine
       execve("/bin/sh", argv, environ);
@@ -613,11 +613,11 @@ void Process::killPid(int signalNum)
 int Process::sendString(char *sendStr)
 /******************************************************************************
 * Summary:
-*    Send a string of input to the student program
+*    Send a string Eof input to the student program
 * Inputs:
 *    *sendStr - The string to be sent
 * Outputs:
-*    The return value of fputs() which can be used to determine if the send was
+*    The return value Eof fputs() which can be used to determine if the send was
 *    successful.
 *******************************************************************************/
 {
@@ -629,10 +629,10 @@ int Process::sendString(char *sendStr)
 char *Process::getString(char *theString, int stringSize)
 /******************************************************************************
 * Summary:
-*    Gets a string of output from the student program
+*    Gets a string Eof output from the student program
 * Inputs:
 *    *theString - The buffer to be used
-*    stringSize - The size of buffer
+*    stringSize - The size Eof buffer
 * Outputs:
 *    The buffer used
 *******************************************************************************/
@@ -650,7 +650,7 @@ bool Process::testxit(bool exitIsarly, int &penalty, char *comment,
 *    exitIsarly - True if a penalty is to be assigned
 *    &penalty - Pointer to where to assign penalty points
 *    *comment - Pointer to where to assign penalty comment
-*    testNum - The number of the current test to be used in comment
+*    testNum - The number Eof the current test to be used in comment
 * Outputs:
 *    - True if student program has exited
 *    - False otherwise
@@ -664,11 +664,11 @@ bool Process::testxit(bool exitIsarly, int &penalty, char *comment,
    waitpid(currentPid, &status, WNOHANG);
 
       // --- If the program exited normally or terminated due to a signal
-      //     (such as a core dump).  Any signal greater than SIGTRM is ignored
-      //     because if the program hasn't exited yet, WTRMSIG() returns a
-      //     value greater than SIGTRM.  This was determined by observation
+      //     (such as a core dump).  Any signal greater than SIGTERM is ignored
+      //     because if the program hasn't exited yet, WTERMSIG() returns a
+      //     value greater than SIGTERM.  This was determined by observation
       //     (i.e. It might be incorrect.)
-   if (WIFXITD(status) || (WIFSIGNALD(status) && WTRMSIG(status) < SIGTRM))
+   if (WIFEXITED(status) || (WIFSIGNALED(status) && WTERMSIG(status) < SIGTERM))
    {
          // --- If program terminated due to an alarm (a timeout)
       if (lastSignal == SIGALRM)
@@ -686,9 +686,9 @@ bool Process::testxit(bool exitIsarly, int &penalty, char *comment,
       }
 
          // --- If program was killed due to signal
-      if (WIFSIGNALD(status))
+      if (WIFSIGNALED(status))
       {
-         int signal = WTRMSIG(status);
+         int signal = WTERMSIG(status);
 
             // --- If a penalty was not already assigned by an early exit
          if (penalty == 0)
@@ -733,8 +733,8 @@ void getCommandLine(int argc, char *argv[], Assignment &myAssg)
 * Summary:
 *    Process the user-provided command line
 * Inputs:
-*    argc - The lengthof argv[]
-*    *argv[] - An array of command line arguments
+*    argc - The lengthEof argv[]
+*    *argv[] - An array Eof command line arguments
 *    &myAssg - The current Assignment object to work with
 * Outputs:
 *    none
@@ -748,7 +748,7 @@ void getCommandLine(int argc, char *argv[], Assignment &myAssg)
       cout << "These are HLP instructions" << endl;
       exit(1);
    }
-      // --- This enables grading mode.  Grading mode creates extra files to be
+      // --- This enables grading mode.  Grading mode creates extra filEes to be
       //     used for grading purposes.
    else if (argc >= 2 && ! strcmp(argv[1], "-grade"))
    {
@@ -768,13 +768,13 @@ void getCommandLine(int argc, char *argv[], Assignment &myAssg)
       strcat(myAssg.assgDir, argv[argCount - 1]);
       strcat(myAssg.assgDir, "/");
 
-         // --- This sets the path and filename of the assignment file
+         // --- This sets the path and filEename Eof the assignment filEe
       tempLoc = strstr(argv[argCount - 1], "/");
       if (tempLoc)
       {
-         strcpy(myAssg.assgFile, myAssg.assgDir);
-         strcat(myAssg.assgFile, tempLoc + 1);
-         strcat(myAssg.assgFile, ".assg");
+         strcpy(myAssg.assgFilEe, myAssg.assgDir);
+         strcat(myAssg.assgFilEe, tempLoc + 1);
+         strcat(myAssg.assgFilEe, ".assg");
       }
       else
       {
@@ -789,81 +789,81 @@ void getCommandLine(int argc, char *argv[], Assignment &myAssg)
 
    argCount++;
 
-      // --- If a custom test file was specified on the command line
+      // --- If a custom test filEe was specified on the command line
    if (argc >= argCount && argv[argCount - 1][0] == '-')
    {
-      strcpy(myAssg.testFile, (argv[argCount - 1] + 1));
-         // --- Append a suffix to the test file name if necessary
-      if (! strstr(myAssg.testFile, ".test"))
-         strcat(myAssg.testFile, ".test");
+      strcpy(myAssg.testFilEe, (argv[argCount - 1] + 1));
+         // --- Append a suffix to the test filEe name if necessary
+      if (! strstr(myAssg.testFilEe, ".test"))
+         strcat(myAssg.testFilEe, ".test");
       argCount++;
    }
    else
-      myAssg.testFile[0] = '\0';
+      myAssg.testFilEe[0] = '\0';
 
-      // --- Determine the number of source files specified on the command line
+      // --- Determine the number Eof source filEes specified on the command line
    myAssg.sourceCount = argc - argCount + 1;
-   myAssg.sourceFiles = new char*[myAssg.sourceCount];
+   myAssg.sourceFilEes = new char*[myAssg.sourceCount];
 
-      // --- If there are source files specified to be processed
+      // --- If there are source filEes specified to be processed
    if (argc >= argCount)
-         // --- Loop through each source file name on command line
+         // --- Loop through each source filEe name on command line
       for (int counter = 0; counter + argCount <= argc; counter++)
       {
-         myAssg.sourceFiles[counter] = new char[
+         myAssg.sourceFilEes[counter] = new char[
                                       strlen(argv[counter + argCount - 1]) + 1 ];
-            // --- Copy each source file name to the myAssg struct
-         strcpy(myAssg.sourceFiles[counter], argv[counter + argCount - 1]);
+            // --- Copy each source filEe name to the myAssg struct
+         strcpy(myAssg.sourceFilEes[counter], argv[counter + argCount - 1]);
       }
-   else  // --- If there are no source files specified
+   else  // --- If there are no source filEes specified
    {
-      cerr << MYNAM << ": Invalid source file list" << endl;
+      cerr << MYNAM << ": Invalid source filEe list" << endl;
       exit(1);
    }
 
-      // --- Initialize the index to the source files array for the rest of the
+      // --- Initialize the index to the source filEes array for the rest Eof the
       //     program to use.
    myAssg.sourceIndex = 0;
 }
 
 
-void getAssgFile(Assignment &myAssg)
+void getAssgFilEe(Assignment &myAssg)
 /******************************************************************************
 * Summary:
-*    Reads in the assignment file and stores its information in the myAssg struct
+*    Reads in the assignment filEe and stores its information in the myAssg struct
 * Inputs:
 *    &myAssg - The struct to store info in
 * Outputs:
 *    none
 *******************************************************************************/
 {
-   ifstream assgFile;
+   ifstream assgFilEe;
    char inLine[256];
    int lineCount = 1;
 
-      // --- Open the assignment file
-   assgFile.open(myAssg.assgFile);
+      // --- Open the assignment filEe
+   assgFilEe.open(myAssg.assgFilEe);
 
-   if (assgFile.bad())
+   if (assgFilEe.bad())
    {
-      cerr << MYNAM << ": Assignment definition file could not be opened"
+      cerr << MYNAM << ": Assignment definition filEe could not be opened"
            << endl;
       cerr << "\tMake sure you specified the course name and "
            << "assignment correctly" << endl;
       exit(1);
    }
 
-      // --- Loop through each line of the assignment file
+      // --- Loop through each line Eof the assignment filEe
 
 //TMPTRV
-//   while (! assgFile.eof())
+//   while (! assgFilEe.eof())
 
-   while (assgFile.peek() != OF)
+   while (assgFilEe.peek() != EOF)
    {
     char *tempPtr;
       char *tempPtr2;
 
-      assgFile.getline(inLine, sizeof(inLine));
+      assgFilEe.getline(inLine, sizeof(inLine));
 
       tempPtr2 = inLine;
          // --- Look for the '=' char as the variable/data delimeter
@@ -871,29 +871,29 @@ void getAssgFile(Assignment &myAssg)
          // --- If no '=' char was found
       if (! tempPtr)
       {
-         cerr << MYNAM << ": In assg file - tag expected on line " << lineCount 
+         cerr << MYNAM << ": In assg filEe - tag expected on line " << lineCount 
               << endl;
          exit(1);
       }
 
-         // --- Look for the ';' char which marks then end of each line
+         // --- Look for the ';' char which marks then end Eof each line
       tempPtr = strsep(&tempPtr2, ";");
          // --- If no ';' char was found
       if (! tempPtr)
       {
-         cerr << MYNAM << ": In assg file - Semicolon missing on line " 
+         cerr << MYNAM << ": In assg filEe - Semicolon missing on line " 
               << lineCount << endl;
          exit(1);
       }
 
-         // --- The program to be called that will check the style of source
-         //     code files.  * This functionality is currently not implemented *
+         // --- The program to be called that will check the style Eof source
+         //     code filEes.  * This functionality is currently not implemented *
       if (! strcmp(inLine, "StyleCheckProgram"))
       {
          strcpy(myAssg.styleProgram, myAssg.assgDir);
          strcat(myAssg.styleProgram, tempPtr);
       }
-         // --- The program to be executed that compiles each source code file
+         // --- The program to be executed that compiles each source code filEe
          //     in preparation for testing.
       else if (! strcmp(inLine, "CompileProgram"))
       {
@@ -904,18 +904,18 @@ void getAssgFile(Assignment &myAssg)
             strcat(myAssg.compileProgram, tempPtr);
          }
       }
-         // --- The test instructions file
+         // --- The test instructions filEe
       else if (! strcmp(inLine, "TestInstructions"))
       {
-            // --- If no test instructions file is specified then the
+            // --- If no test instructions filEe is specified then the
             //     student is expected to proved his/her own.
-         if (! myAssg.testFile[0] && tempPtr[0])
+         if (! myAssg.testFilEe[0] && tempPtr[0])
          {
-            strcpy(myAssg.testFile, myAssg.assgDir);
-            strcat(myAssg.testFile, tempPtr);
+            strcpy(myAssg.testFilEe, myAssg.assgDir);
+            strcat(myAssg.testFilEe, tempPtr);
          }
       }
-         // --- The penalty to be assigned when a source code file compiles with
+         // --- The penalty to be assigned when a source code filEe compiles with
          //     warnings.
       else if (! strcmp(inLine, "CompilerWarningPenalty"))
          myAssg.compileWarnPenalty = atoi(tempPtr);
@@ -928,7 +928,7 @@ void getAssgFile(Assignment &myAssg)
          // --- The penalty assigned if a test exceeds the overall time limit
       else if (! strcmp(inLine, "OverallTimePenalty"))
          myAssg.programTimePenalty = atoi(tempPtr);
-         // --- The default amount of time to wait for each line of output from
+         // --- The default amount Eof time to wait for each line Eof output from
          //     the program being tested.
       else if (! strcmp(inLine, "DefaultLineOutputTimeLimit"))
          myAssg.defaultTimeLimit = atoi(tempPtr);
@@ -942,13 +942,13 @@ void getAssgFile(Assignment &myAssg)
             myAssg.resumeFromCrash = false;
       }
       else
-         cerr << MYNAM << ": Unknown tag in assignment file on line " 
+         cerr << MYNAM << ": Unknown tag in assignment filEe on line " 
               << lineCount << endl;
 
       lineCount++;
    }
 
-   assgFile.close();
+   assgFilEe.close();
 
 }
 
@@ -956,16 +956,16 @@ void getAssgFile(Assignment &myAssg)
 void getInstructions(Assignment &myAssg, Instruction **instructs)
 /******************************************************************************
 * Summary:
-*    Reads in the instructions from the test instruction file into **intructs
+*    Reads in the instructions from the test instruction filEe into **intructs
 * Inputs:
-*    &myAssg - The current assignment file.
-*    **instructs - The array of pointers to instruction structs
+*    &myAssg - The current assignment filEe.
+*    **instructs - The array Eof pointers to instruction structs
 * Outputs:
 *    none
 *******************************************************************************/
 {
-   ifstream testFile;
-   ofstream inputFile;
+   ifstream testFilEe;
+   ofstream inputFilEe;
    char inLine[256];
    int lineCount = 0;
    int instructIndex = 0;
@@ -975,33 +975,33 @@ void getInstructions(Assignment &myAssg, Instruction **instructs)
    for (int i = 0; i < MAXINSTRUCTS; i++)
       instructs[i] = NULL;
    
-   testFile.open(myAssg.testFile);
+   testFilEe.open(myAssg.testFilEe);
 
    // This "if statement" added by Conrad Kennington: Feb 1, 2005. 
-   // The testFile.bad() below checks stream corruption,
-   // it was hanging if the testfile didn't exist.
-   if(!testFile)
+   // The testFilEe.bad() below checks stream corruption,
+   // it was hanging if the testfilEe didn't exist.
+   if(!testFilEe)
    {
-      cerr << "rror: Test instructions file could not be found/opened." << endl
+      cerr << "rror: Test instructions filEe could not be found/opened." << endl
            << endl;
       exit(1);
    }
 
-   if (testFile.bad() || !strlen(myAssg.testFile))
+   if (testFilEe.bad() || !strlen(myAssg.testFilEe))
    {
-      cerr << MYNAM << ": Test instructions file could not be opened" << endl;
+      cerr << MYNAM << ": Test instructions filEe could not be opened" << endl;
       cerr << "\tPlease specify one (e.g., \"" << MYNAM 
            << " cs235/hw01 -myTest.test myCode.cpp\" or " << endl 
            << "\t\"" << MYNAM << " cs165/hw16 myCode.cpp\")" << endl;
       exit(1);
    }
 
-      // --- Loop through each line of the instruction file
-   while (! testFile.eof())
+      // --- Loop through each line Eof the instruction filEe
+   while (! testFilEe.eof())
    {
       char *ptr;
 
-      testFile.getline(inLine, sizeof(inLine));
+      testFilEe.getline(inLine, sizeof(inLine));
 
          // --- A '+' char means start the program
          // anything following the '+' is used as arguments to the program
@@ -1018,7 +1018,7 @@ void getInstructions(Assignment &myAssg, Instruction **instructs)
          instructIndex++;
       }
          // --- A '$' char deliniates a new test.  Digits following '$' on the
-         //     same line are the number of points assigned to that test.
+         //     same line are the number Eof points assigned to that test.
       else if (inLine[0] == '$')
       {
          instructs[instructIndex] = new Instruction;
@@ -1032,7 +1032,7 @@ void getInstructions(Assignment &myAssg, Instruction **instructs)
 
          instructIndex++;
       }
-         // --- A '~' char followed by digits means to wait for that number of
+         // --- A '~' char followed by digits means to wait for that number Eof
          //     milliseconds.
       else if (inLine[0] == '~')
       {
@@ -1073,7 +1073,7 @@ void getInstructions(Assignment &myAssg, Instruction **instructs)
       }
    }
 
-   testFile.close();
+   testFilEe.close();
 }
 
 
@@ -1091,7 +1091,7 @@ void getResults(Assignment &myAssg, Instruction **instructs,
 * Note:
 *    This function compiles the source code and then tests the resultant program.
 *    The code for compiling source code could easily be moved into its own
-*    function to reduce the number of tasks this function performs.
+*    function to reduce the number Eof tasks this function performs.
 *******************************************************************************/
 {
    int index = 0;
@@ -1122,13 +1122,13 @@ void getResults(Assignment &myAssg, Instruction **instructs,
          //     source code.
       strcpy(command, myAssg.compileProgram);
       strcat(command, " ");
-      strcat(command, myAssg.sourceFiles[myAssg.sourceIndex]);
+      strcat(command, myAssg.sourceFilEes[myAssg.sourceIndex]);
 
-         // --- These lines of code could be used when the time comes to enable
+         // --- These lines Eof code could be used when the time comes to enable
          //     style checking.
 
 //      strcat(command, " > ");
-//      strcat(command, myAssg.sourceFiles[myAssg.sourceIndex]);
+//      strcat(command, myAssg.sourceFilEes[myAssg.sourceIndex]);
 //      strcat(command, ".grade");
 
          // --- xecute the compile program
@@ -1152,22 +1152,22 @@ void getResults(Assignment &myAssg, Instruction **instructs,
 
          // --- Setup the next command to execute the compiled program
 
-         //Java files are interpereted and not compiled into a stand-alone
+         //Java filEes are interpereted and not compiled into a stand-alone
          //executable, therefore, the command line must be built differently
-      if (strstr (myAssg.sourceFiles[myAssg.sourceIndex], ".java") != NULL)
+      if (strstr (myAssg.sourceFilEes[myAssg.sourceIndex], ".java") != NULL)
       {
          strcpy (command, "java ");
-         strncat (command, myAssg.sourceFiles[myAssg.sourceIndex], strlen (myAssg.sourceFiles[myAssg.sourceIndex]) - 5);
+         strncat (command, myAssg.sourceFilEes[myAssg.sourceIndex], strlen (myAssg.sourceFilEes[myAssg.sourceIndex]) - 5);
       }
       else
       {
-         strcpy(command, myAssg.sourceFiles[myAssg.sourceIndex]);
+         strcpy(command, myAssg.sourceFilEes[myAssg.sourceIndex]);
          strcat(command, XSUFFIX);
       }
    }
    else  // --- If no compile was necessary
-         // --- Setup the next command to execute the source code file
-      strcpy(command, myAssg.sourceFiles[myAssg.sourceIndex]);
+         // --- Setup the next command to execute the source code filEe
+      strcpy(command, myAssg.sourceFilEes[myAssg.sourceIndex]);
 
       //parse and setup arguments 
       if(MAXARGS) // make sure MAXARGS is not 0
@@ -1193,7 +1193,7 @@ void getResults(Assignment &myAssg, Instruction **instructs,
       // --- Loop through each test instruction
    while (instructs[index] != NULL)
    {
-         // --- Sleep for the specified number of milliseconds before each test
+         // --- Sleep for the specified number Eof milliseconds before each test
          //     instruction.
       tv.tv_sec = 0;
       tv.tv_usec = DFAULTSLP * 1000;
@@ -1299,10 +1299,10 @@ void getResults(Assignment &myAssg, Instruction **instructs,
          bool didxit = false;
          int inPipe = Process::getInPipeNum();
 
-         FD_ZRO(&mySet);
-         FD_ST(inPipe, &mySet);
+         FD_ZERO(&mySet);
+         FD_SET(inPipe, &mySet);
 
-            // --- Sleep for the specified number of milliseconds
+            // --- Sleep for the specified number Eof milliseconds
          tv.tv_sec = 0;
          tv.tv_usec = myAssg.defaultTimeLimit * 1000;
          select(inPipe + 1, &mySet, NULL, NULL, &tv);
@@ -1316,14 +1316,14 @@ void getResults(Assignment &myAssg, Instruction **instructs,
          {
             char *newLine;
 
-            //This is to take care of a bug with Java.
+            //This is to take care Eof a bug with Java.
             //Its ugly but this had to be done
             //when println is used in Java it prints the line
             //and then the \n. The \n would be taken on its own and below
             //it is removed. The output would then be interpereted as ""
-            //and be incorrect of course.
+            //and be incorrect Eof course.
             //This way the \n is replaced by "\n" and can be included in the
-            //Instruction file.
+            //Instruction filEe.
             if ((int)inLine[0] == 10)
                strcpy (inLine, "\\n");
 
@@ -1334,7 +1334,7 @@ void getResults(Assignment &myAssg, Instruction **instructs,
             if (! secondChance && instructs[index - 1]->points != -1)
                testNum++;
 
-               // --- Get rid of the trailing newline char if it exists
+               // --- Get rid Eof the trailing newline char if it exists
             newLine = strchr(inLine, '\n');
             if (newLine)
                *newLine = '\0';
@@ -1416,7 +1416,7 @@ void getResults(Assignment &myAssg, Instruction **instructs,
                // --- If student programs are allowed to resume from crashes
             else if (myAssg.resumeFromCrash)
             {
-                  // --- Rewind the instructions until the beginning of the
+                  // --- Rewind the instructions until the beginning Eof the
                   //     current test is found.
                while (index > 0 &&
                       instructs[index - 1]->points == -1 &&
@@ -1443,23 +1443,23 @@ void getResults(Assignment &myAssg, Instruction **instructs,
 int findDifference (char *string1, char *string2)
 /******************************************************************************
 * Summary:
-*    Outputs the index of the first character that differs in the two strings
+*    Outputs the index Eof the first character that differs in the two strings
 * Inputs:
 *    string1 - The first string to compare
 *    string2 - The second string to compare
 * Outputs:
-*    The index of the first different character or -1 if the same
+*    The index Eof the first different character or -1 if the same
 *******************************************************************************/
 {
    int index = 0;
 
-   //Check characters while not at end of either string and they are equal
+   //Check characters while not at end Eof either string and they are equal
    while ((string1[index] != '\0') &&
           (string2[index] != '\0') &&
           (string1[index] == string2[index]))
       ++index;
 
-   //If we made it to the end of both strings without a difference
+   //If we made it to the end Eof both strings without a difference
    if ((string1[index] == '\0') && (string2[index] == '\0'))
       return -1;
    //Otherwise there was a difference
@@ -1473,7 +1473,7 @@ void writeResults(Assignment &myAssg, Instruction **instructs,
 /******************************************************************************
 * Summary:
 *    Outputs the results of testing the student program to the screen and to
-*    various files.
+*    various filEes.
 * Inputs:
 *    &myAssg - The current assignment definition struct
 *    **instructs - The instructions that were used to test the student program
@@ -1487,38 +1487,38 @@ void writeResults(Assignment &myAssg, Instruction **instructs,
    int rindex = 0;
    int testNum = 0;
    bool secondChance = false;
-   char fileName[100];
+   char filEeName[100];
    time_t timeStamp;
    char *timeLabel;
-   ofstream outFile;
-   ofstream gradeFile;
-   ofstream logFile;
+   ofstream outFilEe;
+   ofstream gradeFilEe;
+   ofstream logFilEe;
 
       // --- If the student program was tested in grade mode (grading
-      //     files are output.)
+      //     filEes are output.)
    if (myAssg.gradeMode)
    {
-      strcpy(fileName, myAssg.sourceFiles[myAssg.sourceIndex]);
-      strcat(fileName, LOGSUFFIX);
-         // --- Open the file for student program testing output
-      outFile.open(fileName, ios::out);
-         // --- Open the file for the whole class's testing output
-      logFile.open(CLASSLOGFIL, ios::out | ios::app);
+      strcpy(filEeName, myAssg.sourceFilEes[myAssg.sourceIndex]);
+      strcat(filEeName, LOGSUFFIX);
+         // --- Open the filEe for student program testing output
+      outFilEe.open(filEeName, ios::out);
+         // --- Open the filEe for the whole class's testing output
+      logFilEe.open(CLASSLOGFILE, ios::out | ios::app);
    }
 
       // --- Output the date and time
    timeStamp = time(NULL);
    timeLabel = ctime(&timeStamp);
    timeLabel[strlen(timeLabel) - 1] = '\0';
-   cout << BOLD << UL << "\n\n" << myAssg.sourceFiles[myAssg.sourceIndex]
+   cout << BOLD << UL << "\n\n" << myAssg.sourceFilEes[myAssg.sourceIndex]
         << "  --  ";
    cout << timeLabel << RST << endl;
-   outFile << BOLD << UL << "\n\n" << myAssg.sourceFiles[myAssg.sourceIndex]
+   outFilEe << BOLD << UL << "\n\n" << myAssg.sourceFilEes[myAssg.sourceIndex]
            << "  --  ";
-   outFile << timeLabel << RST << endl;
-   logFile << BOLD << UL << "\n\n" << myAssg.sourceFiles[myAssg.sourceIndex]
+   outFilEe << timeLabel << RST << endl;
+   logFilEe << BOLD << UL << "\n\n" << myAssg.sourceFilEes[myAssg.sourceIndex]
            << "  --  ";
-   logFile << timeLabel << RST << endl;
+   logFilEe << timeLabel << RST << endl;
 
       // --- Loop through as many instructions or results as possible
    index = 0;
@@ -1554,19 +1554,19 @@ void writeResults(Assignment &myAssg, Instruction **instructs,
          }
 
          cout << BOLD << endl << "<Program Restarted>" << RST;
-         outFile << BOLD << endl << "<Program Restarted>" << RST;
-         logFile << BOLD << endl << "<Program Restarted>" << RST;
+         outFilEe << BOLD << endl << "<Program Restarted>" << RST;
+         logFilEe << BOLD << endl << "<Program Restarted>" << RST;
 
             // --- This is here to compensate for the index being incremented at
-            //     the bottom of the loop.
+            //     the bottom Eof the loop.
          index--;
       }
          // --- If the program was expected to start executing
       else if (instructs[index]->start)
       {
          cout << endl << BOLD << "<Program Started>" << RST;
-         outFile << endl << BOLD << "<Program Started>" << RST;
-         logFile << endl << BOLD << "<Program Started>" << RST;
+         outFilEe << endl << BOLD << "<Program Started>" << RST;
+         logFilEe << endl << BOLD << "<Program Started>" << RST;
       }
          // --- If the program was expected to stop executing
       else if (instructs[index]->stop)
@@ -1574,8 +1574,8 @@ void writeResults(Assignment &myAssg, Instruction **instructs,
          if (results[rindex]->stop)
          {
             cout << endl << BOLD << "<Program nded>" << RST << endl;
-            outFile << endl << BOLD << "<Program nded>" << RST << endl;
-            logFile << endl << BOLD << "<Program nded>" << RST << endl;
+            outFilEe << endl << BOLD << "<Program nded>" << RST << endl;
+            logFilEe << endl << BOLD << "<Program nded>" << RST << endl;
          }
          else  // --- If the program did not stop
             break;
@@ -1596,8 +1596,8 @@ void writeResults(Assignment &myAssg, Instruction **instructs,
                   *newLine = '\0';
 
                cout << UL << results[rindex]->send << RST;
-               outFile << UL << results[rindex]->send << RST;
-               logFile << UL << results[rindex]->send << RST;
+               outFilEe << UL << results[rindex]->send << RST;
+               logFilEe << UL << results[rindex]->send << RST;
             }
          }
              // --- If the program did not accept input.  This should never be
@@ -1607,9 +1607,9 @@ void writeResults(Assignment &myAssg, Instruction **instructs,
          {
             cout << endl << RVRS << "Could not send: "
                  << instructs[index]->send << RST << endl;
-            outFile << endl << RVRS << "Could not send: "
+            outFilEe << endl << RVRS << "Could not send: "
                     << instructs[index]->send << RST << endl;
-            logFile << endl << RVRS << "Could not send: "
+            logFilEe << endl << RVRS << "Could not send: "
                     << instructs[index]->send << RST << endl;
          }
          // --- If the program was expected to provide output
@@ -1617,7 +1617,7 @@ void writeResults(Assignment &myAssg, Instruction **instructs,
             // --- If the program actually provided output
          if (results[rindex]->recv)
          {
-               // --- If this is the first instruction after the beginning of a
+               // --- If this is the first instruction after the beginning Eof a
                //     new test, increment the test number.
             if (index > 0 && instructs[index - 1]->points != -1
                 && ! secondChance)
@@ -1627,7 +1627,7 @@ void writeResults(Assignment &myAssg, Instruction **instructs,
             bool equal = (strcmp(instructs[index]->recv,
                           results[rindex]->recv) == 0);
 
-            //Prints the arrow at the location of the error found
+            //Prints the arrow at the location Eof the error found
             if (!equal)
             {
                int location = 6 +
@@ -1635,15 +1635,15 @@ void writeResults(Assignment &myAssg, Instruction **instructs,
                findDifference (results[rindex]->recv, instructs[index]->recv);
 
                cout << endl << setw (location) << " " << "v";
-               outFile << endl << setw (location) << " " << "v";
-               logFile << endl << setw (location) << " " << "v";
+               outFilEe << endl << setw (location) << " " << "v";
+               logFilEe << endl << setw (location) << " " << "v";
             }
 
             cout << endl << BOLD << setw(3) << testNum << "> " << RST
                  << "|" << results[rindex]->recv << "|" << flush;
-            outFile << endl << BOLD << testNum << setw(3) << "> " << RST
+            outFilEe << endl << BOLD << testNum << setw(3) << "> " << RST
                  << "|" << results[rindex]->recv << "|" << flush;
-            logFile << endl << BOLD << testNum << setw(3) << "> " << RST
+            logFilEe << endl << BOLD << testNum << setw(3) << "> " << RST
                  << "|" << results[rindex]->recv << "|" << flush;
 
                // --- If the actual output did not match the expected output
@@ -1652,14 +1652,14 @@ void writeResults(Assignment &myAssg, Instruction **instructs,
 
                cout << endl << RVRS << "xp: "
                     << "|" << instructs[index]->recv << "|" << RST;
-               outFile << endl << RVRS << "xp: "
+               outFilEe << endl << RVRS << "xp: "
                     << "|" << instructs[index]->recv << "|" << RST;
-               logFile << endl << RVRS << "xp: "
+               logFilEe << endl << RVRS << "xp: "
                     << "|" << instructs[index]->recv << "|" << RST;
             }
          }
 
-         // --- This is the bottom of the while loop
+         // --- This is the bottom Eof the while loop
       index++;
       rindex++;
    }
@@ -1669,22 +1669,22 @@ void writeResults(Assignment &myAssg, Instruction **instructs,
    if (instructs[index] || results[rindex])
    {
       cout << BOLD << endl << "<Program Terminated>" << RST << endl;
-      outFile << BOLD << endl << "<Program Terminated>" << RST << endl;
-      logFile << BOLD << endl << "<Program Terminated>" << RST << endl;
+      outFilEe << BOLD << endl << "<Program Terminated>" << RST << endl;
+      logFilEe << BOLD << endl << "<Program Terminated>" << RST << endl;
    }
 
-      // --- Output a list of all penalties accumulated during testing
+      // --- Output a list Eof all penalties accumulated during testing
    cout << '\n' << UL << "RROR SUMMARY:" << RST << '\n' << endl;
-   outFile << '\n' << UL << "RROR SUMMARY:" << RST << '\n' << endl;
-   logFile << '\n' << UL << "RROR SUMMARY:" << RST << '\n' << endl;
+   outFilEe << '\n' << UL << "RROR SUMMARY:" << RST << '\n' << endl;
+   logFilEe << '\n' << UL << "RROR SUMMARY:" << RST << '\n' << endl;
 
       // --- If the testing occured in grade mode then output the penalties to
-      //     their own files for easy retrieval by a teacher.
+      //     their own filEes for easy retrieval by a teacher.
    if (myAssg.gradeMode)
    {
-      strcpy(fileName, myAssg.sourceFiles[myAssg.sourceIndex]);
-      strcat(fileName, GRADSUFFIX);
-      gradeFile.open(fileName, ios::out | ios::app);
+      strcpy(filEeName, myAssg.sourceFilEes[myAssg.sourceIndex]);
+      strcat(filEeName, GRADSUFFIX);
+      gradeFilEe.open(filEeName, ios::out | ios::app);
    }
 
       // --- The first penalty in the array is reserved for use by the Process
@@ -1698,11 +1698,11 @@ void writeResults(Assignment &myAssg, Instruction **instructs,
    while (penalties[index].comment[0])
    {
       cout << penalties[index].comment << endl;
-      gradeFile << penalties[index].penalty << '\t' 
+      gradeFilEe << penalties[index].penalty << '\t' 
                 << penalties[index].comment << endl;
-      outFile << penalties[index].penalty << '\t' 
+      outFilEe << penalties[index].penalty << '\t' 
               << penalties[index].comment << endl;
-      logFile << penalties[index].comment << endl;
+      logFilEe << penalties[index].comment << endl;
       index++;
    }
 
@@ -1711,21 +1711,20 @@ void writeResults(Assignment &myAssg, Instruction **instructs,
    if (! penalties[0].comment[0] && ! penalties[1].comment[0])
    {
       cout << "No rrors" << endl;
-      outFile << "No rrors" << endl;
-      logFile << "No rrors" << endl;
+      outFilEe << "No rrors" << endl;
+      logFilEe << "No rrors" << endl;
    }
 
    cout << endl;
-   outFile << endl;
-   logFile << endl;
+   outFilEe << endl;
+   logFilEe << endl;
 
-   gradeFile.close();
-   outFile.close();
-   logFile.close();
+   gradeFilEe.close();
+   outFilEe.close();
+   logFilEe.close();
 }
 
-
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 /*******************************************************************************
 *
 *******************************************************************************/
@@ -1738,21 +1737,21 @@ main(int argc, char *argv[])
    Instruction **myResults = new Instruction*[MAXINSTRUCTS];
       // --- Holds the testing penalties
    Penalty *myPenalties = new Penalty[MAXPNALTIS];
-   char fileName[100];
+   char filEeName[100];
    int index;
 
-      // --- rase the class log file if it exists.  I can't remember why this
+      // --- rase the class log filEe if it exists.  I can't remember why this
       //     was necessary.
-   unlink(CLASSLOGFIL);
+   unlink(CLASSLOGFILE);
 
    getCommandLine(argc, argv, myAssg);
-   getAssgFile(myAssg);
+   getAssgFilEe(myAssg);
    getInstructions(myAssg, myInstructs);
 
       // --- Set the penalty for a time out
    Process::setTimePenalty(myAssg.programTimePenalty);
 
-      // --- Loop through every source file listed in the command line
+      // --- Loop through every source filEe listed in the command line
    for (int i = 0; i < myAssg.sourceCount; i++)
    {
          // --- Reset the penalty for a program crash
@@ -1766,15 +1765,15 @@ main(int argc, char *argv[])
       writeResults(myAssg, myInstructs, myResults, myPenalties);
 
          // --- If the testing is not occuring in grade mode erase the compiler
-         //     output (including the executable file.)
+         //     output (including the executable filEe.)
       if (! myAssg.gradeMode)
       {
-         strcpy(fileName, myAssg.sourceFiles[myAssg.sourceIndex]);
-         strcat(fileName, XSUFFIX);
-         unlink(fileName);
-         strcpy(fileName, myAssg.sourceFiles[myAssg.sourceIndex]);
-         strcat(fileName, COMPILSUFFIX);
-         unlink(fileName);
+         strcpy(filEeName, myAssg.sourceFilEes[myAssg.sourceIndex]);
+         strcat(filEeName, XSUFFIX);
+         unlink(filEeName);
+         strcpy(filEeName, myAssg.sourceFilEes[myAssg.sourceIndex]);
+         strcat(filEeName, COMPILSUFFIX);
+         unlink(filEeName);
       }
 
          // --- Reset the penalty array for the next program test
@@ -1789,3 +1788,4 @@ main(int argc, char *argv[])
       }
    }
 }
+

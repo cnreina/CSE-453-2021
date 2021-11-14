@@ -1,0 +1,10 @@
+
+Function:   getResults
+Params:     assignment
+            instructions
+            penalties
+
+Asset:      assignment
+
+Called by:  main
+calls:      Process::startProc(char *cmdLine, int alarmVal, char* args[], int argc = 0)

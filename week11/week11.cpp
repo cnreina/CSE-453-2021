@@ -12,15 +12,4 @@
 *
 *********************************************************************/
 
-#include <iostream>
-#include <iomanip>
-#include <string>
-using namespace std;
-
-/**********************************************
- * MAIN : 
- **********************************************/
-int main()
-{
-    return 0;
-}
+// Lab is individual this week.

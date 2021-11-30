@@ -18,3 +18,4 @@ main11.cpp
 *.pdf
 *docs
 *.code-workspace
+*tests

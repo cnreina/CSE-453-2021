@@ -2,7 +2,15 @@
  * COMPONENT:
  *    INTERACT
  * Author:
- *    Br. Helfrich, <your name here if you made a change>
+ *    Br. Helfrich
+ *    Carlos N Reina
+ *    Adrian Whetten
+ *    Jordan Burdett
+ *    Caleb Georgeson
+ *    Russell Roberts
+ *    Stephen Ellis
+ *    Orion Christensen
+ * 
  * Summary:
  *    This class allows one user to interact with the system
  ************************************************************************/
@@ -34,7 +42,7 @@ const int ID_INVALID = -1;
 
 /****************************************************
  * INTERACT constructor
- * Authenticat ethe user and get him/her all set up
+ * Authenticate the user and get him/her all set up
  ***************************************************/
 Interact::Interact(const string & userName,
                    const string & password,
@@ -53,7 +61,7 @@ void Interact::show() const
 {
    pMessages->show(promptForId("display"));
 }
-   
+
 /****************************************************
  * INTERACT :: DISPLAY
  * display the set of messages

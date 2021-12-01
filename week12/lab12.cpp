@@ -2,7 +2,15 @@
 * Program:
 *    Lab 12, Bell-LaPadula
 * Author:
-*    Br. Helfrich, <your name here if you made a change>
+*    Br. Helfrich
+*    Carlos N Reina
+*    Adrian Whetten
+*    Jordan Burdett
+*    Caleb Georgeson
+*    Russell Roberts
+*    Stephen Ellis
+*    Orion Christensen
+* 
 * Summary: 
 *    This program is designed to keep track of a number of secret
 *    messages. IT will display messages to the appropriate users

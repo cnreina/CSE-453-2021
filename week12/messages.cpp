@@ -2,7 +2,15 @@
  * COMPONENT:
  *    MESSAGES
  * Author:
- *    Br. Helfrich, <your name here if you made a change>
+ *    Br. Helfrich
+ *    Carlos N Reina
+ *    Adrian Whetten
+ *    Jordan Burdett
+ *    Caleb Georgeson
+ *    Russell Roberts
+ *    Stephen Ellis
+ *    Orion Christensen
+ * 
  * Summary:
  *    This class stores the notion of a collection of messages
  ************************************************************************/

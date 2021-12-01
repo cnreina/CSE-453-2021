@@ -89,8 +89,7 @@ void Interact::add()
 void Interact::update()
 {
    int id = promptForId("update");
-   pMessages->update(id,
-                     promptForLine("message"));
+   pMessages->update(id, promptForLine("message"));
 }
 
 /****************************************************
@@ -111,7 +110,7 @@ void displayUsers()
    for (int idUser = 0; idUser < sizeof(users) / sizeof(users[0]); idUser++)
       cout << "\t" << users[idUser].name << endl;
 }
-   
+
 /****************************************************
  * INTERACT :: PROMPT FOR LINE
  * prompt for a line of input

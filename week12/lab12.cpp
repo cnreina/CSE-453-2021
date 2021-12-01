@@ -21,7 +21,7 @@
 #include <string>     // for convenience
 #include <cassert>    // because I am paraniod
 #include "interact.h" // the interaction code
-#include "messages.h" // the collectio of messages
+#include "messages.h" // the collection of messages
 using namespace std;
 
 const char * FILE_NAME = "messages.txt";

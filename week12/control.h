@@ -17,4 +17,9 @@
 
 #pragma once
 
-// you may need to put something here...
+class Control{
+private:
+    
+public:
+    
+};

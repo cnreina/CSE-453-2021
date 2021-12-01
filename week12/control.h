@@ -17,9 +17,12 @@
 
 #pragma once
 
-class Control{
+class Control
+{
 private:
     
 public:
+
     
 };
+

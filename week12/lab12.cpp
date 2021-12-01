@@ -24,7 +24,7 @@
 #include "messages.h" // the collection of messages
 using namespace std;
 
-const char * FILE_NAME = "messages.txt";
+const char * FILE_NAME = "week12/messages.txt";
 
 /***********************************************
  * DISPLAY OPTIONS

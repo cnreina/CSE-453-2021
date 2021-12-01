@@ -26,7 +26,6 @@ using namespace std;
 
 const char * FILE_NAME = "messages.txt";
 
-
 /***********************************************
  * DISPLAY OPTIONS
  ***********************************************/

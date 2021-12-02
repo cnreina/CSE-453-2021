@@ -46,14 +46,8 @@ void Messages::show(int id, Control subject) const
 {
    for (list <Message> :: const_iterator it = messages.begin();
         it != messages.end(); ++it)
-      if (it->getID() == id){
-         if (!securityConditionRead(it->getControl(), subject)){
-            cout << "\nRead access denied\n";
-            return;
-         };
-
+      if (it->getID() == id)
          it->displayText(it->getControl());
-      };
 }
 
 /***********************************************

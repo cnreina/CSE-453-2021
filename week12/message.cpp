@@ -50,6 +50,14 @@ Message::Message(const string & text,
    this->control = control;
 }
 
+bool Message::securityConditionRead(Control control, Control subject)const{
+   return subject >= control;
+};
+
+bool Message::securityConditionWrite(Control control, Control subject)const{
+   return subject <= control;
+};
+
 /**************************************************
  * MESSAGE :: DISPLAY PROPERTIES
  * Display the attributes/properties but not the
@@ -105,7 +113,7 @@ void Message::clear(Control subject)
       cout << "\nWrite access denied\n";
       return;
    };
-   
+
    text = "Empty";
    author.clear();
    date.clear();

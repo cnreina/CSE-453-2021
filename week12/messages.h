@@ -56,10 +56,6 @@ private:
    // the list of messages
    std::list <Message> messages;
 
-   std::list <Control> accessRights;
-   bool securityConditionRead(Control control, Control subject) const;
-   bool securityConditionWrite(Control control, Control subject) const;
-
    // read the messages from a file
    void readMessages(const char * fileName);
 };

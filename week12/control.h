@@ -13,15 +13,11 @@
  * 
  * Summary:
  *    This class stores the notion of Bell-LaPadula
+ *    Implements the Bell-LaPadula data-structure and access-control check.
+ *    It segments policy specification from access control integration.
  ************************************************************************/
 
 #pragma once
 
-class Control
-{
-private:
-    
-public:
+enum Control{PUBLIC, CONFIDENTIAL, PRIVILEGED, SECRET};
 
-    
-};

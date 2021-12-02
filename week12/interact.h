@@ -73,6 +73,8 @@ private:
 
    // find the ID of a given user
    int idFromUser(const std::string & userName) const;
+
+   Control control;
 };
 
 // display the set of users in the system

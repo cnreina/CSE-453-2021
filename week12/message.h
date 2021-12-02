@@ -34,22 +34,26 @@ public:
    // the most commonly used constructor: create a message
    Message(const std::string & text,
            const std::string & author,
-           const std::string & date);
+           const std::string & date,
+           Control control);
 
    // determine the unique ID of this message
    int getID() const { return id; }
+
+   // determine the unique ID of this message
+   Control getControl() const { return control; }
 
    // display the properties but not content of the message
    void displayProperties() const;
 
    // display the content of the message
-   void displayText() const;
+   void displayText(Control subject) const;
 
    // update the text componnet of the message
-   void updateText(const std::string & newText);
+   void updateText(Control subject, const std::string & newText);
 
    // clear out a message
-   void clear();
+   void clear(Control subject);
    
 private:
    int id;                   // the unique ID of this message
@@ -58,4 +62,8 @@ private:
    std::string text;         // the textual content of this message
    std::string author;       // the author of this message
    std::string date;         // the date this message was created
+
+   Control control;
+   bool securityConditionRead(Control control, Control subject) const;
+   bool securityConditionWrite(Control control, Control subject) const;
 };

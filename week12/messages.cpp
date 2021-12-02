@@ -42,39 +42,44 @@ void Messages::display() const
  * MESSAGES :: SHOW
  * show a single message
  **********************************************/
-void Messages::show(int id) const
+void Messages::show(int id, Control subject) const
 {
    for (list <Message> :: const_iterator it = messages.begin();
-        it != messages.end();
-        ++it)
-      if (it->getID() == id)
-         it->displayText();
+        it != messages.end(); ++it)
+      if (it->getID() == id){
+         if (!securityConditionRead(it->getControl(), subject)){
+            cout << "\nRead access denied\n";
+            return;
+         };
+
+         it->displayText(it->getControl());
+      };
 }
 
 /***********************************************
  * MESSAGES :: UPDATE
  * update one single message
  ***********************************************/
-void Messages::update(int id, const string & text)
+void Messages::update(int id, const string & text, Control subject)
 {
    for (list <Message> :: iterator it = messages.begin();
         it != messages.end();
         ++it)
       if (it->getID() == id)
-         it->updateText(text);
+         it->updateText(it->getControl(), text);
 }
 
 /***********************************************
  * MESSAGES :: REMOVE
  * remove a single message
  **********************************************/
-void Messages::remove(int id)
+void Messages::remove(int id, Control subject)
 {
    for (list <Message> :: iterator it = messages.begin();
         it != messages.end();
         ++it)
       if (it->getID() == id)
-         it->clear();
+         it->clear(it->getControl());
 }
 
 /***********************************************
@@ -83,9 +88,10 @@ void Messages::remove(int id)
  **********************************************/
 void Messages::add(const string & text,
                    const string & author,
-                   const string & date)
+                   const string & date,
+                   Control subject)
 {
-   Message message(text, author, date);
+   Message message(text, author, date, subject);
    messages.push_back(message);
 }
 
@@ -117,9 +123,23 @@ void Messages::readMessages(const char * fileName)
       getline(fin, date, '|');
       getline(fin, text);
 
+      Control control;
+      if(textControl == "Public"){
+         control = Control::PUBLIC;
+      };
+      if(textControl == "Confidential"){
+         control = Control::CONFIDENTIAL;
+      };
+      if(textControl == "Privileged"){
+         control = Control::PRIVILEGED;
+      };
+      if(textControl == "Secret"){
+         control = Control::SECRET;
+      };
+      
       if (!fin.fail())
       {
-         Message message(text, author, date);
+         Message message(text, author, date, control);
          messages.push_back(message);
       }
    }

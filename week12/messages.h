@@ -36,23 +36,29 @@ public:
    void display() const;
 
    // show a single message
-   void show(int id) const;
+   void show(int id, Control subject) const;
 
    // update one single message
    void update(int id,
-               const std::string & text);
+               const std::string & text,
+               Control subject);
 
    // remove a single message
-   void remove(int id);
+   void remove(int id, Control subject);
 
    // add a new message
    void add(const std::string & text,
             const std::string & author,
-            const std::string & date);
+            const std::string & date,
+            Control subject);
 
 private:
    // the list of messages
    std::list <Message> messages;
+
+   std::list <Control> accessRights;
+   bool securityConditionRead(Control control, Control subject) const;
+   bool securityConditionWrite(Control control, Control subject) const;
 
    // read the messages from a file
    void readMessages(const char * fileName);

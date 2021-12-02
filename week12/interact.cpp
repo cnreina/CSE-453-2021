@@ -59,7 +59,7 @@ Interact::Interact(const string & userName,
  ****************************************************/
 void Interact::show() const
 {
-   pMessages->show(promptForId("display"));
+   pMessages->show(promptForId("display"), control);
 }
 
 /****************************************************
@@ -79,7 +79,7 @@ void Interact::add()
 {
    pMessages->add(promptForLine("message"),
                   userName,
-                  promptForLine("date"));
+                  promptForLine("date"), control);
 }
 
 /****************************************************
@@ -89,7 +89,7 @@ void Interact::add()
 void Interact::update()
 {
    int id = promptForId("update");
-   pMessages->update(id, promptForLine("message"));
+   pMessages->update(id, promptForLine("message"), control);
 }
 
 /****************************************************
@@ -98,7 +98,7 @@ void Interact::update()
  ***************************************************/
 void Interact::remove()
 {
-   pMessages->remove(promptForId("delete"));
+   pMessages->remove(promptForId("delete"), control);
 }
 
 /****************************************************

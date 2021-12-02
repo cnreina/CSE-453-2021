@@ -29,6 +29,7 @@ Message ::  Message()
    empty = true;
    text = "Empty";
    id = idNext++;
+   control = Control::PUBLIC;
 }
 
 
@@ -38,13 +39,15 @@ Message ::  Message()
  **************************************************/
 Message::Message(const string & text,
                  const string & author,
-                 const string & date)
+                 const string & date,
+                 Control control)
 {
    this->text = text;
    this->author = author;
    this->date = date;
    this->id = idNext++;
    empty = false;
+   this->control = control;
 }
 
 /**************************************************
@@ -68,19 +71,27 @@ void Message::displayProperties() const
  * MESSAGE :: DISPLAY TEXT
  * Display the contents or the text of the message
  **************************************************/
-void Message::displayText() const
+void Message::displayText(Control subject) const
 {
-   cout << "\tMessage: "
-        << text
-        << endl;
+   if (!securityConditionRead(control, subject)){
+      cout << "\nRead access denied\n";
+      return;
+   };
+   
+   cout << "\tMessage: " << text << "\n";
 }
 
 /**************************************************
  * MESSAGE :: UPDATE TEXT
  * Update the contents or text of the message
  **************************************************/
-void Message::updateText(const string & newText)
+void Message::updateText(Control subject, const string & newText)
 {
+   if (!securityConditionWrite(control, subject)){
+      cout << "\nWrite access denied\n";
+      return;
+   };
+
    text = newText;
 }
 
@@ -88,8 +99,13 @@ void Message::updateText(const string & newText)
  * MESSAGE :: CLEAR
  * Delete the contents of a message and mark it as empty
  *************************************************/
-void Message::clear()
+void Message::clear(Control subject)
 {
+   if (!securityConditionWrite(control, subject)){
+      cout << "\nWrite access denied\n";
+      return;
+   };
+   
    text = "Empty";
    author.clear();
    date.clear();

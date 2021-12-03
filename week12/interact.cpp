@@ -22,8 +22,6 @@
 #include "messages.h" // to interact with the collection of messages
 #include "control.h"  // all the Bell-LaPadula stuff
 #include "interact.h" // the interact class and User structure
-#include "user.h"
-#include "users.h"
 
 using namespace std;
 
@@ -31,14 +29,14 @@ using namespace std;
  * USERS
  * All the users currently in the system
  *************************************************************/
-// const User users[] =
-// {
-//    { "AdmiralAbe",     "password" },  
-//    { "CaptainCharlie", "password" }, 
-//    { "SeamanSam",      "password" },
-//    { "SeamanSue",      "password" },
-//    { "SeamanSly",      "password" }
-// };
+const User users[] =
+{
+   { "AdmiralAbe",     "password" },  
+   { "CaptainCharlie", "password" }, 
+   { "SeamanSam",      "password" },
+   { "SeamanSue",      "password" },
+   { "SeamanSly",      "password" }
+};
 
 const int ID_INVALID = -1;
 
@@ -48,8 +46,7 @@ const int ID_INVALID = -1;
  ***************************************************/
 Interact::Interact(const string & userName,
                    const string & password,
-                   Messages & messages,
-                   Users & users)
+                   Messages & messages)
 {
    authenticate(userName, password);
    this->userName = userName;
@@ -108,11 +105,11 @@ void Interact::remove()
  * INTERACT :: DISPLAY USERS
  * display the set of users in the system
  ***************************************************/
-// void displayUsers()
-// {
-//    for (int idUser = 0; idUser < sizeof(users) / sizeof(users[0]); idUser++)
-//       cout << "\t" << users[idUser].name << endl;
-// }
+void displayUsers()
+{
+   for (int idUser = 0; idUser < sizeof(users) / sizeof(users[0]); idUser++)
+      cout << "\t" << users[idUser].name << endl;
+}
 
 /****************************************************
  * INTERACT :: PROMPT FOR LINE
@@ -148,7 +145,7 @@ void Interact::authenticate(const string & userName,
 {
    int id = idFromUser(userName);
    bool authenticated = false;
-   // if (ID_INVALID != id && password == string(users[id].password))
+   if (ID_INVALID != id && password == string(users[id].password))
       authenticated = true;
 }
 
@@ -158,8 +155,8 @@ void Interact::authenticate(const string & userName,
  ****************************************************/
 int Interact::idFromUser(const string & userName) const
 {
-   // for (int idUser = 0; idUser < sizeof(users) / sizeof(users[0]); idUser++)
-   //    if (userName == string(users[idUser].name))
-   //       return idUser;
+   for (int idUser = 0; idUser < sizeof(users) / sizeof(users[0]); idUser++)
+      if (userName == string(users[idUser].name))
+         return idUser;
    return ID_INVALID;
 }

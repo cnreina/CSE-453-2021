@@ -22,7 +22,6 @@
 #include <cassert>    // because I am paraniod
 #include "interact.h" // the interaction code
 #include "messages.h" // the collection of messages
-#include "users.h"
 
 using namespace std;
 

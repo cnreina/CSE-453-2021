@@ -29,6 +29,7 @@ struct User
 {
    const char *name;
    const char *password;
+   Control control;
 };
 
 /****************************************************

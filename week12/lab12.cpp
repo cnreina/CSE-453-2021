@@ -114,7 +114,6 @@ void session(Messages & messages)
 int main()
 {
    Messages messages(FILE_NAME);
-   Users user(FILE_NAME_USERS);
 
    bool done;
    do

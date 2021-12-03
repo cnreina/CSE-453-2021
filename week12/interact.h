@@ -20,16 +20,18 @@
 #include <string>     // for convenience
 #include "messages.h" // to interact with the collection of messages
 #include "control.h"  // all the Bell-LaPadula stuff
+#include "user.h"
+#include "users.h"
 
 /**************************************************************
  * USER
  * All the users currently in the system
  *************************************************************/
-struct User
-{
-   const char *name;
-   const char *password;
-};
+// struct User
+// {
+//    const char *name;
+//    const char *password;
+// };
 
 /****************************************************
  * INTERACT
@@ -40,7 +42,8 @@ class Interact
 public:
    Interact(const std::string & userName,
             const std::string & password,
-            Messages & messages);
+            Messages & messages,
+            Users & users);
 
    // show a single message
    void show() const;
@@ -59,6 +62,7 @@ public:
 
 private:
    Messages * pMessages;
+   Users * users;
    std::string userName;
 
    // prompt for a line of input

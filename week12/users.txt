@@ -1,0 +1,10 @@
+AdmiralAbe",     "password
+CaptainCharlie", "password
+SeamanSam",      "password
+SeamanSue",      "password
+SeamanSly",      "password
+
+Confidential|Winston Churchill|16 May 1940|You ask what is our aim? I can answer in one word: Victory!
+Public|President Franklin D. Roosevelt|29 December 1940|No man can tame a tiger into a kitten by stroking it.
+Secret|Fleet Admiral Chester W. Nimitz|10 December 1941|Good thing our carriers were out to sea on Sunday!
+Privileged|Captain Buckmaster|7 June 1942|I doubt those little airplanes can sink my ship

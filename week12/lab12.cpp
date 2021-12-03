@@ -22,9 +22,12 @@
 #include <cassert>    // because I am paraniod
 #include "interact.h" // the interaction code
 #include "messages.h" // the collection of messages
+#include "users.h"
+
 using namespace std;
 
 const char * FILE_NAME = "week12/messages.txt";
+const char * FILE_NAME_USERS = "week12/users.txt";
 
 /***********************************************
  * DISPLAY OPTIONS
@@ -111,6 +114,7 @@ void session(Messages & messages)
 int main()
 {
    Messages messages(FILE_NAME);
+   Users user(FILE_NAME_USERS);
 
    bool done;
    do

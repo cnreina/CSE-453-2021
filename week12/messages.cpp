@@ -47,7 +47,7 @@ void Messages::show(int id, Control subject) const
    for (list <Message> :: const_iterator it = messages.begin();
         it != messages.end(); ++it)
       if (it->getID() == id)
-         it->displayText(it->getControl());
+         it->displayText(subject);
 }
 
 /***********************************************
@@ -60,7 +60,7 @@ void Messages::update(int id, const string & text, Control subject)
         it != messages.end();
         ++it)
       if (it->getID() == id)
-         it->updateText(it->getControl(), text);
+         it->updateText(subject, text);
 }
 
 /***********************************************
@@ -73,7 +73,7 @@ void Messages::remove(int id, Control subject)
         it != messages.end();
         ++it)
       if (it->getID() == id)
-         it->clear(it->getControl());
+         it->clear(subject);
 }
 
 /***********************************************

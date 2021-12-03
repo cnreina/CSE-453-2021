@@ -69,7 +69,7 @@ private:
    int promptForId(const char * verb) const;
 
    // authenticate the user;
-   void authenticate(const std::string & userName,
+   Control authenticate(const std::string & userName,
                      const std::string & password) const;
 
    // find the ID of a given user

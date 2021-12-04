@@ -28,12 +28,13 @@ using namespace std;
 /**************************************************************
  * USERS
  * All the users currently in the system
+ *  AdmiralAbe. You should be able to view everything but change very little. Next, run it as SeamanSam. You should be able to .
  *************************************************************/
 const User users[] =
 {
-   { "AdmiralAbe",     "password", SECRET       },  
-   { "CaptainCharlie", "password", PRIVILEGED   }, 
-   { "SeamanSam",      "password", CONFIDENTIAL },
+   { "AdmiralAbe",     "password", SECRET       }, // can view everything but change very little
+   { "CaptainCharlie", "password", PRIVILEGED   },
+   { "SeamanSam",      "password", CONFIDENTIAL }, // van view very little but change just about everything
    { "SeamanSue",      "password", CONFIDENTIAL },
    { "SeamanSly",      "password", CONFIDENTIAL }
 };

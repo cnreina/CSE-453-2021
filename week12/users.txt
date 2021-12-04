@@ -1,5 +1,0 @@
-Secret|AdmiralAbe|password|notes
-Confidential|SeamanSam|password|notes
-Confidential|SeamanSue|password|notes
-Confidential|SeamanSly|password|notes
-Privileged|CaptainCharlie|password|notes

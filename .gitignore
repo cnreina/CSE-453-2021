@@ -1,7 +1,6 @@
 .DS_Store
 .vs
 .vscode
-*.code-workspace
 *builds
 *.pdb
 *.sln
@@ -14,3 +13,9 @@
 *.dSYM
 *App
 cnr*
+main11.cpp
+*.webloc
+*.pdf
+*docs
+*.code-workspace
+*tests

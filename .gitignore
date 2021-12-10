@@ -1,7 +1,6 @@
 .DS_Store
 .vs
 .vscode
-*.code-workspace
 *builds
 *.pdb
 *.sln
@@ -17,3 +16,4 @@ cnr*
 *.pdf
 docs
 tests
+*.code-workspace

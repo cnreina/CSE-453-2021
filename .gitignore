@@ -13,9 +13,7 @@
 *.dSYM
 *App
 cnr*
-main11.cpp
-*.webloc
 *.pdf
-*docs
+docs
+tests
 *.code-workspace
-*tests
